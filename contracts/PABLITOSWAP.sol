@@ -37,7 +37,9 @@ contract PABLITOSWAP {
         require(_tokenA == tokenA || _tokenA == tokenB, "Unsupported tokenA");                      
         require(_tokenB == tokenA || _tokenB == tokenB, "Unsupported tokenB");
 
-
+        // Token transfers from user to my contract address
+        IERC20(tokenA).transferFrom(msg.sender, address(this), amount);
+        IERC20(tokenB).transferFrom(msg.sender, address(this), amount);
 
     }   
 
