@@ -22,4 +22,57 @@ contract PABLITOSWAPLP {
         tokenB = _tokenB;
         pablitoSwap = msg.sender;
     }
+
+
+    function addLiquidity(uint256 amountA, uint256 amountB) external {
+
+        // Check amount tokens A WETH and B USDC
+        require(amountA > 0, "Amount must be > 0"); 
+        require(amountB > 0, "Amount must be > 0"); 
+
+        // Token transfers from user to my contract address
+        IERC20(tokenA).safeTransferFrom(msg.sender, address(this), amountA);
+        IERC20(tokenB).safeTransferFrom(msg.sender, address(this), amountB);
+
+        // Update variables storage: how many tokens add?
+        reserveA += amountA;
+        reserveB += amountB;
+
+        // What to do emit? 
+        emit addLiquidity(msg.sender, amountA, amountB);
+
+    }
+
+// Save: Events = Logs on the blockchain, check by address (basescan.org)
+event AddLiquidity(address indexed user, uint256 amountA, uint256 amountB);
+
+
+    function removeLiquidity(uint256 amountA, uint256 amountB) external {
+
+        // Check amount: tokens A WETH and B USDC
+        require(amountA > 0, "Amount must be > 0");  
+        require(amountB > 0, "Amount must be > 0"); 
+
+        // Check amount: too much/not enough (>= whole reserve)
+        require(reserveA >= amountA, "Not enough reserveA");
+        require(reserveB >= amountB, "Not enough reserveB");
+
+        // Token transfers from my contract to user address 
+        IERC20(tokenA).safeTransfer(msg.sender, amountA);
+        IERC20(tokenB).safeTransfer(msg.sender, amountB);
+
+        // Update variables storage: how many tokens subtrack?
+        reserveA -= amountA;
+        reserveB -= amountB;
+
+        // What to do emit? 
+        emit removeLiquidity(msg.sender, amountA, amountB);
+
+    }
+
+// Save: Events = Logs on the blockchain, check by address (basescan.org)
+event RemoveLiquidity(address indexed user, uint256 amountA, uint256 amountB);
+
+
+
 }
