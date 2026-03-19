@@ -46,8 +46,6 @@ contract PABLITOSWAP {
         IERC20(tokenB).safeTransferFrom(msg.sender, address(this), amount);
 
 
-
-
     }   
 
 }
