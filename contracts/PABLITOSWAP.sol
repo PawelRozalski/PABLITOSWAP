@@ -10,8 +10,8 @@ using SafeERC20 for IERC20;
 
 contract PABLITOSWAP {
 
-    address public immutable tokenA;
-    address public immutable tokenB;
+    address public immutable tokenA;                // WETH
+    address public immutable tokenB;                // USDC
     address public owner;
     uint256 public reward_liquidity;
 

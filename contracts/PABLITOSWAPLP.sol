@@ -10,7 +10,9 @@ using SafeERC20 for IERC20;
 
 contract PABLITOSWAPLP {
 
-
+    uint256 public reserveA;                    // WETH
+    uint256 public reserveB;                    // USDC
+    uint256 public fee = 3;                     // 0.3%
 
 
 }
