@@ -24,6 +24,7 @@ contract PABLITOSWAPLP {
     }
 
 
+    // AMM: add reserve to LP (+)
     function addLiquidity(uint256 amountA, uint256 amountB) external {
 
         // Check amount tokens A WETH and B USDC
@@ -47,6 +48,7 @@ contract PABLITOSWAPLP {
 event AddLiquidity(address indexed user, uint256 amountA, uint256 amountB);
 
 
+    // AMM: subtract reserve from LP (-) 
     function removeLiquidity(uint256 amountA, uint256 amountB) external {
 
         // Check amount: tokens A WETH and B USDC
@@ -61,7 +63,7 @@ event AddLiquidity(address indexed user, uint256 amountA, uint256 amountB);
         IERC20(tokenA).safeTransfer(msg.sender, amountA);
         IERC20(tokenB).safeTransfer(msg.sender, amountB);
 
-        // Update variables storage: how many tokens subtrack?
+        // Update variables storage: how many tokens subtract?
         reserveA -= amountA;
         reserveB -= amountB;
 
@@ -74,5 +76,36 @@ event AddLiquidity(address indexed user, uint256 amountA, uint256 amountB);
 event RemoveLiquidity(address indexed user, uint256 amountA, uint256 amountB);
 
 
+    // AMM: x * y = k (for swap: from WETH to USDC and from USDC to WETH)
+    function calculateAmountOut(uint256 amountIn, address tokenIn) external view returns (uint256) {
+
+        uint256 reserveIn;
+        uint256 reserveOut;
+
+        // amount from user without fee
+        uint256 amountWithoutFee = amountIn * (1000 - fee) / 1000;
+
+
+        // when tokenA: then reserveA + amountA and reserveB - amountB 
+        if (tokenIn == tokenA) {
+            reserveIn = reserveA;
+            reserveOut = reserveB;
+        } else {
+            reserveIn = reserveB;
+            reserveOut = reserveA;
+        }
+
+
+        // formula for swap: how many token give to user? = (amount from user without fee * reserve after swap) / (reserve before swap + amount from user without fee)
+        // like this: uint256 k = reserveA * reserveB (k = x * y) 
+        uint256 amountOut = (amountWithoutFee * reserveOut) / (reserveIn + amountWithoutFee);
+        return amountOut;
+
+    }
+
+    // next and final: struct with mapping 
+
 
 }
+
+
