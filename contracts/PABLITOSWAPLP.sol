@@ -76,6 +76,15 @@ event AddLiquidity(address indexed user, uint256 amountA, uint256 amountB);
 event RemoveLiquidity(address indexed user, uint256 amountA, uint256 amountB);
 
 
+    struct User {
+        uint256 amount_tokenA;
+        uint256 amount_tokenB;
+    }
+
+    // every address = quantity assigned tokens
+    mapping(address => User) public users;
+
+
     // AMM: x * y = k (for swap: from WETH to USDC and from USDC to WETH)
     function calculateAmountOut(uint256 amountIn, address tokenIn) external view returns (uint256) {
 
@@ -102,8 +111,6 @@ event RemoveLiquidity(address indexed user, uint256 amountA, uint256 amountB);
         return amountOut;
 
     }
-
-    // next and final: struct with mapping 
 
 
 }
