@@ -32,4 +32,14 @@ contract PABLITOSWAP {
     }
 
 
+    // call to add LP 
+    function addLiquidityToLP(uint256 amountA, uint256 amountB) external { 
+        lpContract.addLiquidity(amountA, amountB); } 
+
+
+    // call to remove LP 
+    function removeLiquidityFromLP(uint256 amountA, uint256 amountB) external { 
+        lpContract.removeLiquidity(amountA, amountB); }
+
+
 }
