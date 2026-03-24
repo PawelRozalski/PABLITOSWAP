@@ -34,12 +34,19 @@ contract PABLITOSWAP {
 
     // call to add LP 
     function addLiquidityToLP(uint256 amountA, uint256 amountB) external { 
-        lpContract.addLiquidity(amountA, amountB); } 
+        lpContract.addLiquidity(amountA, amountB); 
+    } 
 
 
     // call to remove LP 
     function removeLiquidityFromLP(uint256 amountA, uint256 amountB) external { 
-        lpContract.removeLiquidity(amountA, amountB); }
+        lpContract.removeLiquidity(amountA, amountB); 
+    }
 
+
+    // call for swap in LP (calculateAmountOut) 
+    function calculateAmountInLP (uint256 amountIn, address tokenIn) external view returns (uint256) {
+        return lpContract.calculateAmountOut(amountIn, tokenIn);
+    }
 
 }
