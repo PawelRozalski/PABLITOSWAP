@@ -79,6 +79,7 @@ event RemoveLiquidity(address indexed user, uint256 amountA, uint256 amountB);
     struct User {
         uint256 amount_tokenA;
         uint256 amount_tokenB;
+        uint256 reward_liquidity;
     }
 
     // every address = quantity assigned tokens
