@@ -21,6 +21,7 @@ contract PABLITOSWAP {
         tokenA = _tokenA;
         tokenB = _tokenB;
         owner = msg.sender;
+        lpContract = PABLITOSWAPLP(_lpAddress);
     }
 
 
@@ -29,10 +30,6 @@ contract PABLITOSWAP {
         require(msg.sender == owner, "Not owner");                                      // Remember: change from require/revert to custom errors with "if" (after tests / optimalization gas)
         _;
     }
-        
-
-
-
 
 
 }
