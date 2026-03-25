@@ -40,7 +40,7 @@ contract PABLITOSWAPLP {
         reserveB += amountB;
 
         // What to do emit? 
-        emit addLiquidity(msg.sender, amountA, amountB);
+        emit AddLiquidity(msg.sender, amountA, amountB);
 
     }
 
@@ -68,7 +68,7 @@ event AddLiquidity(address indexed user, uint256 amountA, uint256 amountB);
         reserveB -= amountB;
 
         // What to do emit? 
-        emit removeLiquidity(msg.sender, amountA, amountB);
+        emit RemoveLiquidity(msg.sender, amountA, amountB);
 
     }
 
