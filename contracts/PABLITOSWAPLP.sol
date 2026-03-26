@@ -71,7 +71,7 @@ contract PABLITOSWAPLP {
 
 
         // What to do emit? 
-        emit AddLiquidity(msg.sender, amountA, amountB);
+        emit AddLiquidity(msg.sender, amountA, amountB, liquidity);
 
     }
 
