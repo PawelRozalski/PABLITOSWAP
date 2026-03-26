@@ -58,6 +58,9 @@ contract PABLITOSWAPLP {
             liquidity = min(liquidityA, liquidityB);
         }
 
+        // limit for amount minimum  
+        require(liquidity > 0, "Insufficient liquidity");
+
 
         // update in storage state for user: +LP for user
         userLiquidity[msg.sender] += liquidity;
