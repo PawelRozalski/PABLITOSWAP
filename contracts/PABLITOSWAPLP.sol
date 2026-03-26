@@ -46,9 +46,17 @@ contract PABLITOSWAPLP {
             liquidity = (amountB * totalLiquidity) / reserveB;
         }
 
+
+        // update in storage state for user: +LP for user
+        userLiquidity[msg.sender] += liquidity;
+        // total LP in pool: + for pool
+        totalLiquidity += liquidity;
+
+
         // Update variables storage: how many tokens add?
         reserveA += amountA;
         reserveB += amountB;
+
 
         // What to do emit? 
         emit AddLiquidity(msg.sender, amountA, amountB);
