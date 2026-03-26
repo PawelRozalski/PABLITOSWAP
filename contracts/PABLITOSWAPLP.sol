@@ -76,7 +76,7 @@ contract PABLITOSWAPLP {
     }
 
 // Save: Events = Logs on the blockchain, check by address (basescan.org)
-event AddLiquidity(address indexed user, uint256 amountA, uint256 amountB);
+event AddLiquidity(address indexed user, uint256 amountA, uint256 amountB, uint256 liquidity);
 
 
     // AMM: subtract reserve from LP (-) 
