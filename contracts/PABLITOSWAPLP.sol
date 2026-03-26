@@ -37,6 +37,15 @@ contract PABLITOSWAPLP {
         IERC20(tokenA).safeTransferFrom(msg.sender, address(this), amountA);
         IERC20(tokenB).safeTransferFrom(msg.sender, address(this), amountB);
 
+        // first amounts in pool:
+        if (totalLiquidity == 0) {
+            liquidity = sqrt(amountA * amountB);
+        // every amounts next in pool:
+        } else {
+            liquidity = (amountA * totalLiquidity) / reserveA;
+            liquidity = (amountB * totalLiquidity) / reserveB;
+        }
+
         // Update variables storage: how many tokens add?
         reserveA += amountA;
         reserveB += amountB;
