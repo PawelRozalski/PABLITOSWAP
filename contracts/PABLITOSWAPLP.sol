@@ -51,6 +51,12 @@ contract PABLITOSWAPLP {
             liquidity = sqrt(amountA * amountB);
         // every amounts next in pool:
         } else {
+            // perfect ratio
+            require(
+                amountA * reserveB == amountB * reserveA,
+                "Wrong token ratio"
+            );
+
             uint256 liquidityA = (amountA * totalLiquidity) / reserveA;
             uint256 liquidityB = (amountB * totalLiquidity) / reserveB;
 
@@ -60,12 +66,6 @@ contract PABLITOSWAPLP {
 
         // limit for amount minimum  
         require(liquidity > 0, "Insufficient liquidity");
-
-        // perfect ratio
-        require(
-            amountA * reserveB == amountB * reserveA,
-            "Wrong token ratio"
-        );
 
 
         // update in storage state for user: +LP for user
