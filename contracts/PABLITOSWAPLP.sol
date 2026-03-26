@@ -27,6 +27,8 @@ contract PABLITOSWAPLP {
     // AMM: add reserve to LP (+)
     function addLiquidity(uint256 amountA, uint256 amountB) external {
 
+        uint256 liquidity;
+
         // Check amount tokens A WETH and B USDC
         require(amountA > 0, "Amount must be > 0"); 
         require(amountB > 0, "Amount must be > 0"); 
