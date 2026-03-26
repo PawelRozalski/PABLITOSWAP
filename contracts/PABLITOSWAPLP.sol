@@ -61,6 +61,12 @@ contract PABLITOSWAPLP {
         // limit for amount minimum  
         require(liquidity > 0, "Insufficient liquidity");
 
+        // perfect ratio
+        require(
+            amountA * reserveB == amountB * reserveA,
+            "Wrong token ratio"
+        );
+
 
         // update in storage state for user: +LP for user
         userLiquidity[msg.sender] += liquidity;
