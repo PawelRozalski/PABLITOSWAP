@@ -51,8 +51,8 @@ contract PABLITOSWAPLP {
             liquidity = sqrt(amountA * amountB);
         // every amounts next in pool:
         } else {
-            liquidity = (amountA * totalLiquidity) / reserveA;
-            liquidity = (amountB * totalLiquidity) / reserveB;
+            uint256 liquidityA = (amountA * totalLiquidity) / reserveA;
+            uint256 liquidityB = (amountB * totalLiquidity) / reserveB;
 
             // limit for user deposit  
             liquidity = min(liquidityA, liquidityB);
