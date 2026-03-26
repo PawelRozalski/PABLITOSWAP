@@ -53,6 +53,9 @@ contract PABLITOSWAPLP {
         } else {
             liquidity = (amountA * totalLiquidity) / reserveA;
             liquidity = (amountB * totalLiquidity) / reserveB;
+
+            // limit for user deposit  
+            liquidity = min(liquidityA, liquidityB);
         }
 
 
