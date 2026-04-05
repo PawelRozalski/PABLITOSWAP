@@ -10,6 +10,9 @@ contract PABLITOSWAPLP {
 
     using SafeERC20 for IERC20;
 
+    address public tokenA;
+    address public tokenB;
+    uint256 public totalLiquidity;
     uint256 public reserveA;                    // WETH
     uint256 public reserveB;                    // USDC
     uint256 public fee = 3;                     // 0.3%
