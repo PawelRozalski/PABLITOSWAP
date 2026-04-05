@@ -28,7 +28,7 @@ contract PABLITOSWAPLP {
 
 
     // every address = quantity owned share tokens
-    mapping(address => User) public users;
+    mapping(address => uint256) public userLiquidity;
 
 
     // AMM: add reserve to LP (+)
