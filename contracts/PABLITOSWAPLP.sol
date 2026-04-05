@@ -27,7 +27,7 @@ contract PABLITOSWAPLP {
     }
 
 
-    // every address = quantity assigned tokens
+    // every address = quantity owned share tokens
     mapping(address => User) public users;
 
 
