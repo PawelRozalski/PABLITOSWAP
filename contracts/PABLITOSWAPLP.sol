@@ -27,11 +27,6 @@ contract PABLITOSWAPLP {
     }
 
 
-    struct User {
-        uint256 amount_tokenA;
-        uint256 amount_tokenB;
-    }
-
     // every address = quantity assigned tokens
     mapping(address => User) public users;
 
