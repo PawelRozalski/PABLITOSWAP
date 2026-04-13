@@ -95,9 +95,7 @@ event AddLiquidity(address indexed user, uint256 amountA, uint256 amountB, uint2
 
         require(liquidity <= userLiquidity[msg.sender]); 
 
-        // Check amount: too much/not enough (>= whole reserve)
-        require(reserveA >= amountA, "Not enough reserveA");
-        require(reserveB >= amountB, "Not enough reserveB");
+
 
         // Token transfers from my contract to user address 
         IERC20(tokenA).safeTransfer(msg.sender, amountA);
