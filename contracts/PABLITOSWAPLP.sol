@@ -98,16 +98,16 @@ event AddLiquidity(address indexed user, uint256 amountA, uint256 amountB, uint2
         uint256 amountA = (liquidity * reserveA) / totalLiquidity;
         uint256 amountB = (liquidity * reserveB) / totalLiquidity;
 
-        // Token transfers from my contract to user address 
-        IERC20(tokenA).safeTransfer(msg.sender, amountA);
-        IERC20(tokenB).safeTransfer(msg.sender, amountB);
-
         userLiquidity[msg.sender] -= liquidity;	
         totalLiquidity -= liquidity;
 
         // Update variables storage: how many tokens subtract?
         reserveA -= amountA;
         reserveB -= amountB;
+
+        // Token transfers from my contract to user address 
+        IERC20(tokenA).safeTransfer(msg.sender, amountA);
+        IERC20(tokenB).safeTransfer(msg.sender, amountB);
 
         // What to do emit? 
         emit RemoveLiquidity(msg.sender, amountA, amountB);
