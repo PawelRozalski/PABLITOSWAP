@@ -89,7 +89,7 @@ event AddLiquidity(address indexed user, uint256 amountA, uint256 amountB, uint2
 
 
     // AMM: subtract reserve from LP (-) 
-    function removeLiquidity(uint256 amountA, uint256 amountB) external {
+    function removeLiquidity(uint256 liquidity) external {
 
         // Check amount: tokens A WETH and B USDC
         require(amountA > 0, "Amount must be > 0");  
