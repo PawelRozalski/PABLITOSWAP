@@ -93,9 +93,7 @@ event AddLiquidity(address indexed user, uint256 amountA, uint256 amountB, uint2
 
         require(liquidity > 0);
 
-        // Check amount: tokens A WETH and B USDC
-        require(amountA > 0, "Amount must be > 0");  
-        require(amountB > 0, "Amount must be > 0"); 
+        
 
         // Check amount: too much/not enough (>= whole reserve)
         require(reserveA >= amountA, "Not enough reserveA");
