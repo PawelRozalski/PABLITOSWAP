@@ -93,7 +93,7 @@ event AddLiquidity(address indexed user, uint256 amountA, uint256 amountB, uint2
 
         require(liquidity > 0);
 
-        
+        require(liquidity <= userLiquidity[msg.sender]); 
 
         // Check amount: too much/not enough (>= whole reserve)
         require(reserveA >= amountA, "Not enough reserveA");
