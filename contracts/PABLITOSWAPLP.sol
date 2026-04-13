@@ -115,7 +115,7 @@ event AddLiquidity(address indexed user, uint256 amountA, uint256 amountB, uint2
     }
 
 // Save: Events = Logs on the blockchain, check by address (basescan.org)
-event RemoveLiquidity(address indexed user, uint256 amountA, uint256 amountB);
+event RemoveLiquidity(address indexed user, uint256 amountA, uint256 amountB, uint256 liquidity);
 
 
     // AMM: x * y = k (for swap: from WETH to USDC and from USDC to WETH)
