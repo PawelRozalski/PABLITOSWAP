@@ -93,6 +93,8 @@ event AddLiquidity(address indexed user, uint256 amountA, uint256 amountB, uint2
 
         require(liquidity > 0);
 
+        require(totalLiquidity > 0);
+
         require(liquidity <= userLiquidity[msg.sender]); 
 
         uint256 amountA = (liquidity * reserveA) / totalLiquidity;
