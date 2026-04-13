@@ -110,7 +110,7 @@ event AddLiquidity(address indexed user, uint256 amountA, uint256 amountB, uint2
         IERC20(tokenB).safeTransfer(msg.sender, amountB);
 
         // What to do emit? 
-        emit RemoveLiquidity(msg.sender, amountA, amountB);
+        emit RemoveLiquidity(msg.sender, amountA, amountB, liquidity);
 
     }
 
