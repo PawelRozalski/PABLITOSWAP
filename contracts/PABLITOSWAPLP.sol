@@ -102,6 +102,9 @@ event AddLiquidity(address indexed user, uint256 amountA, uint256 amountB, uint2
         IERC20(tokenA).safeTransfer(msg.sender, amountA);
         IERC20(tokenB).safeTransfer(msg.sender, amountB);
 
+        userLiquidity[msg.sender] -= liquidity;	
+        totalLiquidity -= liquidity;
+
         // Update variables storage: how many tokens subtract?
         reserveA -= amountA;
         reserveB -= amountB;
