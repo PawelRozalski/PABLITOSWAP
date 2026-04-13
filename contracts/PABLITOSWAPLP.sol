@@ -95,7 +95,8 @@ event AddLiquidity(address indexed user, uint256 amountA, uint256 amountB, uint2
 
         require(liquidity <= userLiquidity[msg.sender]); 
 
-
+        uint256 amountA = (liquidity * reserveA) / totalLiquidity;
+        uint256 amountB = (liquidity * reserveB) / totalLiquidity;
 
         // Token transfers from my contract to user address 
         IERC20(tokenA).safeTransfer(msg.sender, amountA);
