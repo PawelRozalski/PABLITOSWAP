@@ -79,7 +79,7 @@ contract PABLITOSWAPLP {
         reserveB += amountB;
 
 
-        // What to do emit? 
+        // emit event for tracking liquidity add
         emit AddLiquidity(msg.sender, amountA, amountB, liquidity);
 
     }
@@ -91,27 +91,38 @@ event AddLiquidity(address indexed user, uint256 amountA, uint256 amountB, uint2
     // AMM: subtract reserve from LP (-) 
     function removeLiquidity(uint256 liquidity) external {
 
+        // user must burn more than zero share tokens
         require(liquidity > 0);
 
+        // pool must have liquidity 
         require(totalLiquidity > 0);
 
+        // user can't burn more share tokens than they own
         require(liquidity <= userLiquidity[msg.sender]); 
 
+
+        // calculate how many A and B tokens, user to get based on share tokens 
         uint256 amountA = (liquidity * reserveA) / totalLiquidity;
         uint256 amountB = (liquidity * reserveB) / totalLiquidity;
 
+
+        // update user share tokens balance (in storage)
         userLiquidity[msg.sender] -= liquidity;	
+        // update total liquidity in the pool (in storage)
         totalLiquidity -= liquidity;
 
-        // Update variables storage: how many tokens subtract?
+
+        // update pool reserves
         reserveA -= amountA;
         reserveB -= amountB;
+
 
         // Token transfers from my contract to user address 
         IERC20(tokenA).safeTransfer(msg.sender, amountA);
         IERC20(tokenB).safeTransfer(msg.sender, amountB);
 
-        // What to do emit? 
+
+        // emit event for tracking liquidity remove
         emit RemoveLiquidity(msg.sender, amountA, amountB, liquidity);
 
     }
