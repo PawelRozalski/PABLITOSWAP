@@ -159,6 +159,84 @@ event RemoveLiquidity(address indexed user, uint256 amountA, uint256 amountB, ui
     }
 
 
-}
+    function swap(address tokenIn, uint256 amountIn, uint256 minAmountOut) external {
+    
 
+        address tokenOut;
+
+        // variables for calculate in function 
+        uint256 reserveIn;
+        uint256 reserveOut;
+
+        // amount from user without fee
+        uint256 amountWithoutFee = amountIn * (1000 - fee) / 1000;
+
+
+        // User must to introduce token amount high than zero 
+        require(amountIn > 0, "Amount must be > 0");
+
+
+        // Check tokens A = A, B = B
+        require(tokenIn == tokenA || tokenIn == tokenB, "Not this token");
+    
+    
+        // Check reserve state
+        require(reserveA > 0, "Amount must be > 0");
+        require(reserveB > 0, "Amount must be > 0");
+
+
+        // direction swap
+        if (tokenIn == tokenA) {
+            tokenOut = tokenB;
+            reserveIn = reserveA;
+            reserveOut = reserveB;
+        } else {
+            tokenOut = tokenA;
+            reserveIn = reserveB;
+            reserveOut = reserveA;
+        }
+
+
+        // In this the same formula like in calculateAmountOut function
+        uint256 amountOut = (amountWithoutFee * reserveOut) / (reserveIn + amountWithoutFee);
+
+
+        // require for small amount to out 
+        require(amountOut > 0, "Insufficient output");
+
+
+        // Slippage protection = user to take minimum token amount out prom the predict value in calculateAmountOut view function
+        require(amountOut >= minAmountOut);
+
+
+        // Token transfers from user to my contract address
+        IERC20(tokenIn).safeTransferFrom(msg.sender, address(this), amountIn);
+
+
+        // direction update reserves
+        if (tokenIn == tokenA) {
+            reserveA += amountIn;
+            reserveB -= amountOut;
+
+        } else {
+            reserveB += amountIn;
+            reserveA -= amountOut;
+        }
+
+
+        // Token transfers from my contract to user address 
+        IERC20(tokenOut).safeTransfer(msg.sender, amountOut);
+
+
+        // emit event for tracking liquidity remove
+        emit Swap(msg.sender, tokenIn, amountIn, amountOut);
+
+
+    }
+
+// Save: Events = Logs on the blockchain, check by address (basescan.org)
+event Swap(address indexed user, address tokenIn, uint256 amountIn, uint256 amountOut);
+
+
+}
 
