@@ -17,7 +17,7 @@ contract PABLITOSWAP {
 
 
     // these variables: are set once in deployment and can't be changed
-    constructor (address _tokenA, address _tokenB) {
+    constructor (address _tokenA, address _tokenB, address _lpAddress) {
         tokenA = _tokenA;
         tokenB = _tokenB;
         owner = msg.sender;
