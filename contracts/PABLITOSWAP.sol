@@ -50,4 +50,9 @@ contract PABLITOSWAP {
     }
 
 
+    // call for swap in LP contract
+    function swapInLP(address tokenIn, uint256 amountIn, uint256 minAmountOut) external {
+        lpContract.swap(tokenIn, amountIn, minAmountOut);
+    }
+
 }
