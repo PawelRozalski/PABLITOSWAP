@@ -48,7 +48,7 @@ contract PablitoSwapLP {
 
         // first amounts in pool:
         if (totalLiquidity == 0) {
-            liquidity = sqrt(amountA * amountB);
+            liquidity = Math.sqrt(amountA * amountB);
         // every amounts next in pool:
         } else {
             // perfect ratio
@@ -61,7 +61,7 @@ contract PablitoSwapLP {
             uint256 liquidityB = (amountB * totalLiquidity) / reserveB;
 
             // limit for user deposit  
-            liquidity = min(liquidityA, liquidityB);
+            liquidity = Math.min(liquidityA, liquidityB);
         }
 
         // limit for amount minimum  
