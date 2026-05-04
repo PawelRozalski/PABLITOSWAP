@@ -42,7 +42,7 @@ contract PablitoSwap {
 
     // call to remove LP 
     function removeLiquidityFromLP(uint256 liquidity) external { 
-        lpContract.removeLiquidity(amountA, amountB); 
+        lpContract.removeLiquidity(liquidity); 
     }
 
 
