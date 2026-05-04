@@ -15,6 +15,7 @@ contract PablitoSwap {
     address public immutable tokenB;                // USDC
     address public owner;
     uint256 public reward_liquidity;
+    PablitoSwapLP public lpContract;
 
 
     // these variables: are set once in deployment and can't be changed
