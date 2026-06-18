@@ -9,4 +9,10 @@ import "../src/PablitoSwapLP.sol";
 
 contract PablitoSwapLPTest is Test {
 
+    // contract like a variable for calculate 
+    PablitoSwapLP public calc;
+
+        address tokenA;
+        address tokenB;
     
+}
