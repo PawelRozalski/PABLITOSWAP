@@ -14,5 +14,17 @@ contract PablitoSwapLPTest is Test {
 
         address tokenA;
         address tokenB;
+
+
+    // SETUP: deploy  
+    function setUp() public {
+
+        tokenA = 0x4200000000000000000000000000000000000006;            // Base Sepolia testnet: WETH
+        tokenB = 0x036CbD53842c5426634e7929541eC2318f3dCF7e;            // Base Sepolia testnet: USDC
+
+        calc = new PablitoSwapLP(tokenA, tokenB);                       // add data from constructor for tests
+        
+        
+    }
     
 }
