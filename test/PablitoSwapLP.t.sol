@@ -24,7 +24,23 @@ contract PablitoSwapLPTest is Test {
 
         calc = new PablitoSwapLP(tokenA, tokenB);                       // add data from constructor for tests
         
-        
     }
     
+
+    function test_Constructor_SetsOwner() public {
+
+        address actualOwner;
+        address expectedOwner;
+
+
+        actualOwner = calc.owner();                     // who is owner contract?                   address from this calc.owner variable
+        expectedOwner = address(this);                  // implementation contract address?         this contract
+
+        // ASSERT: checking correct of result. The comparison between the owner of the deployed contract PablitoSwapLP and address of deployed contract 
+        assertEq(actualOwner, expectedOwner);
+
+    }
+
+
+
 }
