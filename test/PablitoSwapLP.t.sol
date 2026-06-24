@@ -42,5 +42,61 @@ contract PablitoSwapLPTest is Test {
     }
 
 
+    function test_Constructor_tokens() public {
+
+        address actualTokenA;
+        address expectedTokenA;
+        address actualTokenB;
+        address expectedTokenB;
+
+
+        actualTokenA = calc.tokenA();
+        expectedTokenA = tokenA;
+
+        assertEq(actualTokenA, expectedTokenA);
+
+
+        actualTokenB = calc.tokenB();
+        expectedTokenB = tokenB;
+
+        assertEq(actualTokenB, expectedTokenB);
+
+    }
+
+
+    function test_InitialState() public {
+        
+        uint256 actualTotalLiquidity;
+        uint256 expectedTotalLiquidity;
+        uint256 actualReserveA;
+        uint256 expectedReserveA;
+        uint256 actualReserveB;
+        uint256 expectedReserveB;
+        uint256 actualFee;
+        uint256 expectedFee;
+
+
+        actualTotalLiquidity = calc.totalLiquidity();
+        expectedTotalLiquidity = 0;
+
+        assertEq(actualTotalLiquidity, expectedTotalLiquidity);
+
+        actualReserveA = calc.reserveA();
+        expectedReserveA = 0;
+
+        assertEq(actualReserveA, expectedReserveA);
+
+        actualReserveB = calc.reserveB();
+        expectedReserveB = 0;
+
+        assertEq(actualReserveB, expectedReserveB);
+
+        actualFee = calc.fee();
+        expectedFee = 3;
+
+        assertEq(actualFee, expectedFee);
+        
+    }
+
 
 }
