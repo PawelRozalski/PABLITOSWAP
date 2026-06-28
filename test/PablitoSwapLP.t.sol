@@ -99,4 +99,22 @@ contract PablitoSwapLPTest is Test {
     }
 
 
+    // Whether states changed after LP add 
+    function test_AddLiquidity() public {
+
+        uint256 amountA = 1e18;                         // ETH
+        uint256 amountB = 1500e6;                       // USDC
+
+        calc.addLiquidity(amountA, amountB);
+
+        assertGt(calc.userLiquidity(address(this)), 0);
+        assertGt(calc.totalLiquidity(), 0);
+        assertEq(calc.reserveA(), amountA);
+        assertEq(calc.reserveB(), amountB);
+
+    }
+
+
+
+
 }
