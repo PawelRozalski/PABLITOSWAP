@@ -105,6 +105,14 @@ contract PablitoSwapLPTest is Test {
         uint256 amountA = 1e18;                         // ETH
         uint256 amountB = 1500e6;                       // USDC
 
+        // taked tokens:
+        deal(tokenA, address(this), amountA);
+        deal(tokenB, address(this), amountB);
+
+        // approval tokens:
+        IERC20(tokenA).approve(address(calc), amountA);
+        IERC20(tokenB).approve(address(calc), amountB);
+
         calc.addLiquidity(amountA, amountB);
 
         assertGt(calc.userLiquidity(address(this)), 0);
