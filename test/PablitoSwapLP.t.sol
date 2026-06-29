@@ -99,7 +99,7 @@ contract PablitoSwapLPTest is Test {
     }
 
 
-    // Whether states changed after LP add 
+    // Whether states changed after LP add: 
     function test_AddLiquidity() public {
 
         uint256 amountA = 1e18;                         // ETH
@@ -121,8 +121,11 @@ contract PablitoSwapLPTest is Test {
 
         calc.addLiquidity(amountA, amountB);
 
+        // did something come up in userLiquidity and totalLiquidity?
         assertGt(calc.userLiquidity(address(this)), 0);
         assertGt(calc.totalLiquidity(), 0);
+
+        // did come up exactly how I deposit?
         assertEq(calc.reserveA(), amountA);
         assertEq(calc.reserveB(), amountB);
 
