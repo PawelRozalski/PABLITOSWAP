@@ -14,8 +14,8 @@ contract PablitoSwapLPTest is Test {
     // contract like a variable for calculate 
     PablitoSwapLP public calc;
 
-        address tokenA;
-        address tokenB;
+        MockERC20 public tokenA;        // fake token A
+        MockERC20 public tokenB;        // fake token B
 
 
     // SETUP: deploy  
