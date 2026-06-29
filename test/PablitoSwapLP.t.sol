@@ -21,8 +21,8 @@ contract PablitoSwapLPTest is Test {
     // SETUP: deploy  
     function setUp() public {
 
-        tokenA = 0x4200000000000000000000000000000000000006;            // Base Sepolia testnet: WETH
-        tokenB = 0x036CbD53842c5426634e7929541eC2318f3dCF7e;            // Base Sepolia testnet: USDC
+        tokenA = new MockERC20();       // create fake token A
+        tokenB = new MockERC20();       // create fake token B
 
         calc = new PablitoSwapLP(tokenA, tokenB);                       // add data from constructor for tests
         
