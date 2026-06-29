@@ -109,9 +109,15 @@ contract PablitoSwapLPTest is Test {
         deal(tokenA, address(this), amountA);
         deal(tokenB, address(this), amountB);
 
+        // start like a user:
+        vm.startPrank(address(this));
+
         // approval tokens:
         IERC20(tokenA).approve(address(calc), amountA);
         IERC20(tokenB).approve(address(calc), amountB);
+
+        // stop like a user:
+        vm.stopPrank();
 
         calc.addLiquidity(amountA, amountB);
 
