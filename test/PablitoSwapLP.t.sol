@@ -27,8 +27,7 @@ contract PablitoSwapLPTest is Test {
         MockERC20(tokenA).mint(address(this), 1e18);        // new token mint for 1 value with e18 for ETH simulation
         MockERC20(tokenB).mint(address(this), 1500e6);      // new token mint for 1500 value with e6 for USDC simulation
 
-        calc = new PablitoSwapLP(tokenA, tokenB);                       // add data from constructor for tests
-        
+        calc = new PablitoSwapLP(address(tokenA), address(tokenB));                      // add data from constructor for tests
     }
     
 
