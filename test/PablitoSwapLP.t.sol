@@ -49,19 +49,19 @@ contract PablitoSwapLPTest is Test {
     function test_Constructor_tokens() public {
 
         address actualTokenA;
-        expectedTokenA = address(tokenA);
+        address expectedTokenA;
         address actualTokenB;
-        expectedTokenB = address(tokenB);
+        address expectedTokenB;
 
 
         actualTokenA = calc.tokenA();
-        expectedTokenA = tokenA;
+        expectedTokenA = address(tokenA);
 
         assertEq(actualTokenA, expectedTokenA);
 
 
         actualTokenB = calc.tokenB();
-        expectedTokenB = tokenB;
+        expectedTokenB = address(tokenB);
 
         assertEq(actualTokenB, expectedTokenB);
 
