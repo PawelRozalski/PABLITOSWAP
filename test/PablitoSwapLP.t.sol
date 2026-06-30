@@ -43,7 +43,7 @@ contract PablitoSwapLPTest is Test {
 
         // ASSERT: checking correct of result. The comparison between the owner of the deployed contract PablitoSwapLP and address of deployed contract 
         assertEq(actualPablitoSwap, expectedPablitoSwap);
-
+        
     }
 
 
@@ -111,8 +111,8 @@ contract PablitoSwapLPTest is Test {
         uint256 amountB = 1500e6;                       // USDC
 
         // taked tokens:
-        deal(tokenA, address(this), amountA);
-        deal(tokenB, address(this), amountB);
+        deal(address(tokenA), address(this), amountA);
+        deal(address(tokenB), address(this), amountB);
 
         // start like a user:
         vm.startPrank(address(this));
