@@ -21,6 +21,8 @@ contract PablitoSwapLPTest is Test {
     // SETUP: deploy  
     function setUp() public {
 
+        
+
         tokenA = new MockERC20();       // create fake token A
         tokenB = new MockERC20();       // create fake token B
 
@@ -28,6 +30,15 @@ contract PablitoSwapLPTest is Test {
         MockERC20(tokenB).mint(address(this), 1500e6);      // new token mint for 1500 value with e6 for USDC simulation
 
         calc = new PablitoSwapLP(address(tokenA), address(tokenB));                      // add data from constructor for tests
+
+        // taked tokens:
+        deal(address(tokenA), address(this), amountA);
+        deal(address(tokenB), address(this), amountB);
+
+        // approval tokens:
+        IERC20(tokenA).approve(address(calc), amountA);
+        IERC20(tokenB).approve(address(calc), amountB);
+
     }
     
 
