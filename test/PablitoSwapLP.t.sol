@@ -109,21 +109,13 @@ contract PablitoSwapLPTest is Test {
         uint256 amountA = 1e18;                         // ETH
         uint256 amountB = 1500e6;                       // USDC
 
-        // taked tokens:
-        deal(address(tokenA), address(this), amountA);
-        deal(address(tokenB), address(this), amountB);
-
         // start like a user:
         vm.startPrank(address(this));
 
-        // approval tokens:
-        IERC20(tokenA).approve(address(calc), amountA);
-        IERC20(tokenB).approve(address(calc), amountB);
+        calc.addLiquidity(amountA, amountB);
 
         // stop like a user:
         vm.stopPrank();
-
-        calc.addLiquidity(amountA, amountB);
 
         // did something come up in userLiquidity and totalLiquidity?
         assertGt(calc.userLiquidity(address(this)), 0);
@@ -134,7 +126,6 @@ contract PablitoSwapLPTest is Test {
         assertEq(calc.reserveB(), amountB);
 
     }
-
 
 
 
