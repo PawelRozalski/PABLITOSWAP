@@ -137,5 +137,30 @@ contract PablitoSwapLPTest is Test {
     }
 
 
+    function test_AddLiquidity_Revert() public {
+
+        // uint256 amountA = 1;
+        // uint256 amountB = 1500;
+
+        calc.addLiquidity(amountA, amountB);
+
+        uint256 amountAA = 1;
+        uint256 amountBB = 6000;
+
+        // taked tokens A and B with amount AA and BB:
+        deal(address(tokenA), address(this), amountAA);
+        deal(address(tokenB), address(this), amountBB);
+
+        // approval tokens A and B with amount AA and BB:
+        IERC20(tokenA).approve(address(calc), amountAA);
+        IERC20(tokenB).approve(address(calc), amountBB);
+
+        vm.expectRevert("Wrong token ratio");
+        calc.addLiquidity(amountAA, amountBB);
+
+    }
+
+
+
 
 }
