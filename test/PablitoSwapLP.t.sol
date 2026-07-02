@@ -21,7 +21,8 @@ contract PablitoSwapLPTest is Test {
     // SETUP: deploy  
     function setUp() public {
 
-        
+        uint256 amountA = 1e18;                         // ETH
+        uint256 amountB = 1500e6;                       // USDC
 
         tokenA = new MockERC20();       // create fake token A
         tokenB = new MockERC20();       // create fake token B
