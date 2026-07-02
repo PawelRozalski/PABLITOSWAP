@@ -118,9 +118,6 @@ contract PablitoSwapLPTest is Test {
     // Whether states changed after LP add: 
     function test_AddLiquidity() public {
 
-        uint256 amountA = 1e18;                         // ETH
-        uint256 amountB = 1500e6;                       // USDC
-
         // start like a user:
         vm.startPrank(address(this));
 
