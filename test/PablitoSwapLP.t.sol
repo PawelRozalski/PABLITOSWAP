@@ -161,6 +161,38 @@ contract PablitoSwapLPTest is Test {
     }
 
 
+    function test_RemoveLiquidity() public {
+
+        // Add LP:
+        vm.startPrank(address(this));
+
+        calc.addLiquidity(amountA, amountB);
+
+        vm.stopPrank();
+
+        // did something come up in userLiquidity and totalLiquidity?
+        assertGt(calc.userLiquidity(address(this)), 0);
+        assertGt(calc.totalLiquidity(), 0);
+
+        // did come up exactly how I deposit?
+        assertEq(calc.reserveA(), amountA);
+        assertEq(calc.reserveB(), amountB);
+
+        // Remove LP:
+        uint256 liquidity = calc.userLiquidity(address(this));
+
+        vm.startPrank(address(this));
+
+        calc.removeLiquidity(liquidity);
+
+        vm.stopPrank();
+
+        assertEq(calc.userLiquidity(address(this)), 0);
+        assertEq(calc.totalLiquidity(), 0);
+        assertEq(calc.reserveA(), 0);
+        assertEq(calc.reserveB(), 0);
+
+    }
 
 
 }
