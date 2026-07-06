@@ -195,4 +195,49 @@ contract PablitoSwapLPTest is Test {
     }
 
 
+    function test_RemoveLiquidityPart() public {
+
+        // Add LP:
+        vm.startPrank(address(this));
+
+        calc.addLiquidity(amountA, amountB);
+
+        vm.stopPrank();
+
+        // did something come up in userLiquidity and totalLiquidity?
+        assertGt(calc.userLiquidity(address(this)), 0);
+        assertGt(calc.totalLiquidity(), 0);
+
+        // did come up exactly how I deposit?
+        assertEq(calc.reserveA(), amountA);
+        assertEq(calc.reserveB(), amountB);
+
+
+        // Remove LP:
+        // save state:
+        uint256 liquidityBefore = calc.userLiquidity(address(this));
+        uint256 totalLiquidityBefore = calc.totalLiquidity();
+
+        // remove 75%:
+        uint256 liquidity = liquidityBefore * 75 / 100;
+
+        // remove 75% > expected still 25%:
+        uint256 expectedReserveA = amountA * 25 / 100;
+        uint256 expectedReserveB = amountB * 25 / 100;
+
+        vm.startPrank(address(this));
+
+        calc.removeLiquidity(liquidity);
+
+        vm.stopPrank();
+
+        assertLt(calc.userLiquidity(address(this)), liquidityBefore);
+        // allow rounding error:
+        assertApproxEqRel(calc.totalLiquidity(), totalLiquidityBefore - liquidity, 1e16);
+        assertLt(calc.reserveA(), amountA);
+        assertLt(calc.reserveB(), amountB);
+
+    }
+
+
 }
