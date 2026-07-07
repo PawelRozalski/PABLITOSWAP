@@ -243,14 +243,15 @@ contract PablitoSwapLPTest is Test {
     // incorrect function call for LP = 0
     function test_RemoveLiquidityZeroAmountLP() public {
 
-    vm.startPrank(address(this));
+        vm.startPrank(address(this));
 
-    vm.expectRevert(); 
+        vm.expectRevert(); 
 
-    calc.removeLiquidity(0);
+        calc.removeLiquidity(0);
 
 
     }
+
 
 
 
