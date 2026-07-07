@@ -240,7 +240,7 @@ contract PablitoSwapLPTest is Test {
     }
 
 
-    // incorrect function call for LP = 0
+    // incorrect function call for LP = 0, for: require(liquidity > 0)
     function test_RemoveLiquidity_ZeroAmountLP() public {
 
         vm.startPrank(address(this));
@@ -252,7 +252,21 @@ contract PablitoSwapLPTest is Test {
     }
 
 
-    // user can not withdraw more LP, what he have 
+    // new user with zero LP, for: require(totalLiquidity > 0)
+    function test_RemoveLiquidity_YourFirstInteractionNoLP() public {
+
+        address first = address(0x999);
+
+        vm.startPrank(first);
+
+        vm.expectRevert();
+
+        calc.removeLiquidity(100);
+
+    }
+
+
+    // user can not withdraw more LP, what he have, for: require(liquidity <= userLiquidity[msg.sender])
     function test_RemoveLiquidity_TooMuchWithdrawLP() public {
         
         vm.startPrank(address(this));
@@ -264,6 +278,7 @@ contract PablitoSwapLPTest is Test {
         vm.stopPrank();
 
     }
+
 
 
 
