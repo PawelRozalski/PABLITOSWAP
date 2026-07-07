@@ -249,9 +249,21 @@ contract PablitoSwapLPTest is Test {
 
         calc.removeLiquidity(0);
 
-
     }
 
+
+    // user can not withdraw more LP, what he have 
+    function test_RemoveLiquidity_TooMuchWithdrawLP() public {
+        
+        vm.startPrank(address(this));
+
+        vm.expectRevert();
+
+        calc.removeLiquidity(10000);
+        
+        vm.stopPrank();
+
+    }
 
 
 
