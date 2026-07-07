@@ -195,7 +195,7 @@ contract PablitoSwapLPTest is Test {
     }
 
 
-    function test_RemoveLiquidityPart() public {
+    function test_RemoveLiquidity_Part() public {
 
         // Add LP:
         vm.startPrank(address(this));
@@ -241,7 +241,7 @@ contract PablitoSwapLPTest is Test {
 
 
     // incorrect function call for LP = 0
-    function test_RemoveLiquidityZeroAmountLP() public {
+    function test_RemoveLiquidity_ZeroAmountLP() public {
 
         vm.startPrank(address(this));
 
