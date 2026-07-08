@@ -161,7 +161,7 @@ contract PablitoSwapLPTest is Test {
     }
 
 
-        function test_AddLiquidity_CreateFirstLP() public {
+    function test_AddLiquidity_CreateFirstLP() public {
 
         vm.startPrank(address(this));
         
@@ -175,6 +175,54 @@ contract PablitoSwapLPTest is Test {
         
         // do user take a share tokens?
         assertGt(calc.userLiquidity(address(this)), 0);
+        assertGt(calc.totalLiquidity(), 0);
+
+    }
+
+
+    function test_AddLiquidity_AddSecondLP() public {
+
+        address first = address(0x999);
+
+        vm.startPrank(address(first));
+
+        // taked tokens:
+        deal(address(tokenA), address(first), 1e18);
+        deal(address(tokenB), address(first), 1500e6);
+
+        // approval tokens:
+        IERC20(tokenA).approve(address(calc), 1e18);
+        IERC20(tokenB).approve(address(calc), 1500e6);
+
+        calc.addLiquidity(1e18, 1500e6);
+
+        vm.stopPrank();
+
+        address second = address(0x777);
+
+
+        vm.startPrank(address(second));
+
+        // taked tokens:
+        deal(address(tokenA), address(second), 3e18);
+        deal(address(tokenB), address(second), 4500e6);
+
+        // approval tokens:
+        IERC20(tokenA).approve(address(calc), 3e18);
+        IERC20(tokenB).approve(address(calc), 4500e6);
+
+        calc.addLiquidity(3e18, 4500e6);
+
+        vm.stopPrank();
+
+        // check reserves
+        assertGt(calc.reserveA(), 3e18);
+        assertGt(calc.reserveB(), 5000e6);
+        
+        // do user take a share tokens?
+        assertGt(calc.userLiquidity(address(first)), 0);
+        assertGt(calc.userLiquidity(address(second)), 0);
+
         assertGt(calc.totalLiquidity(), 0);
 
     }
