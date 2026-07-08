@@ -161,6 +161,25 @@ contract PablitoSwapLPTest is Test {
     }
 
 
+        function test_AddLiquidity_CreateFirstLP() public {
+
+        vm.startPrank(address(this));
+        
+        calc.addLiquidity(1e18, 1500e6);
+
+        vm.stopPrank();
+
+        // check reserves: from zero to 1 (A) and 1500 (B)
+        assertGt(calc.reserveA(), 0);
+        assertGt(calc.reserveB(), 0);
+        
+        // do user take a share tokens?
+        assertGt(calc.userLiquidity(address(this)), 0);
+        assertGt(calc.totalLiquidity(), 0);
+
+    }
+
+
     function test_RemoveLiquidity() public {
 
         // Add LP:
@@ -278,7 +297,6 @@ contract PablitoSwapLPTest is Test {
         vm.stopPrank();
 
     }
-
 
 
 
