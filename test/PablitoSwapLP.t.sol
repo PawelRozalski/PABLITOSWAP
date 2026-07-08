@@ -283,6 +283,20 @@ contract PablitoSwapLPTest is Test {
     }
 
 
+    // token B
+    function test_AddLiquidity_RevertWhenAmountBIsZero() public {
+
+        vm.startPrank(address(this));
+
+        vm.expectRevert("Amount must be > 0"); 
+
+        calc.addLiquidity(2000, 0);
+    
+        vm.stopPrank();
+
+    }
+
+
     function test_RemoveLiquidity() public {
 
         // Add LP:
