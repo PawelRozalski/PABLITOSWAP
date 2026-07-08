@@ -198,8 +198,8 @@ contract PablitoSwapLPTest is Test {
 
         vm.stopPrank();
 
-        address second = address(0x777);
 
+        address second = address(0x777);
 
         vm.startPrank(address(second));
 
@@ -224,6 +224,47 @@ contract PablitoSwapLPTest is Test {
         assertGt(calc.userLiquidity(address(second)), 0);
 
         assertGt(calc.totalLiquidity(), 0);
+
+    }
+
+
+    // revert for: wrong token ratio
+    function test_AddLiquidity_AddSecondLP_Revert() public {
+
+        address first = address(0x999);
+
+        vm.startPrank(address(first));
+
+        // taked tokens:
+        deal(address(tokenA), address(first), 1e18);
+        deal(address(tokenB), address(first), 1500e6);
+
+        // approval tokens:
+        IERC20(tokenA).approve(address(calc), 1e18);
+        IERC20(tokenB).approve(address(calc), 1500e6);
+
+        calc.addLiquidity(1e18, 1500e6);
+
+        vm.stopPrank();
+
+
+        address second = address(0x777);
+
+        vm.startPrank(address(second));
+
+        // taked tokens:
+        deal(address(tokenA), address(second), 7e18);
+        deal(address(tokenB), address(second), 2500e6);
+
+        // approval tokens:
+        IERC20(tokenA).approve(address(calc), 7e18);
+        IERC20(tokenB).approve(address(calc), 2500e6);
+
+        vm.expectRevert("Wrong token ratio");
+
+        calc.addLiquidity(7e18, 2500e6);
+
+        vm.stopPrank();
 
     }
 
@@ -345,7 +386,6 @@ contract PablitoSwapLPTest is Test {
         vm.stopPrank();
 
     }
-
 
 
 }
