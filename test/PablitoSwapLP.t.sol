@@ -416,5 +416,34 @@ contract PablitoSwapLPTest is Test {
     }
 
 
+    // correct result for token A valuation, forntend expected Tokena B
+    function test_CalculateAmountOut_FromTokenAToTokenB() public {
+
+        vm.startPrank(address(this));
+
+        deal(address(tokenA), address(this), 6e18);
+        deal(address(tokenB), address(this), 9000e6);
+
+        IERC20(tokenA).approve(address(calc), 6e18);
+        IERC20(tokenB).approve(address(calc), 9000e6);
+
+        // 6 * 9000 = 54000
+        calc.addLiquidity(6e18, 9000e6);
+
+        vm.stopPrank();
+
+        uint256 amountIn = 2e18;
+        address tokenIn = address(tokenA);
+
+        // how many give token B 
+        uint256 expectedB = calc.calculateAmountOut(amountIn, address(tokenA));
+
+        // 54000 / (6+2) = 6750 and 9000 - 6750 = 2250 (plus fee nad slippage)
+        assertGt(expectedB, 2200e6);
+        assertLt(expectedB, 2300e6);
+
+    }
+
+
 
 }
