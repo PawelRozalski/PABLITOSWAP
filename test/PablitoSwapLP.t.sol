@@ -473,5 +473,29 @@ contract PablitoSwapLPTest is Test {
     }
 
 
+    function test_CalculateAmountOut_HigherAmountOut() public {
+
+        vm.startPrank(address(this));
+
+        deal(address(tokenA), address(this), 6e18);
+        deal(address(tokenB), address(this), 9000e6);
+
+        IERC20(tokenA).approve(address(calc), 6e18);
+        IERC20(tokenB).approve(address(calc), 9000e6);
+
+        // 6 * 9000 = 54000
+        calc.addLiquidity(6e18, 9000e6);
+
+        vm.stopPrank();
+
+        uint256 amountOut1 = calc.calculateAmountOut(1e18, address(tokenA));
+        uint256 amountOut2 = calc.calculateAmountOut(2e18, address(tokenA));
+
+        // 54000 / (6+3) = 6000 and 9000 - 6000 = 3000 output is around 3000 USDC before accounting for fee and price impact
+        assertGt(amountOut2, amountOut1);
+
+    }
+
+
 
 }
