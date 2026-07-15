@@ -497,5 +497,30 @@ contract PablitoSwapLPTest is Test {
     }
 
 
+    function test_CalculateAmountOut_AddedFee() public {
+
+        vm.startPrank(address(this));
+
+        deal(address(tokenA), address(this), 6e18);
+        deal(address(tokenB), address(this), 9000e6);
+
+        IERC20(tokenA).approve(address(calc), 6e18);
+        IERC20(tokenB).approve(address(calc), 9000e6);
+
+        // 6 * 9000 = 54000
+        calc.addLiquidity(6e18, 9000e6);
+
+        vm.stopPrank();
+
+        uint256 amountOut = calc.calculateAmountOut(2e18, address(tokenA));
+
+        // 54000 / (6+2) = 6750 and 9000 - 6750 = 2250 output is around 2250 USDC before accounting for fee and price impact
+        // fee: 2250 * (1000 - 3) / 1000 = 2243,25
+        assertGt(amountOut, 2243e6);
+        assertLt(amountOut, 2245e6);
+
+    }
+
+
 
 }
