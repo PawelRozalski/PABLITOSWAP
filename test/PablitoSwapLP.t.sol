@@ -522,5 +522,29 @@ contract PablitoSwapLPTest is Test {
     }
 
 
+    function test_CalculateAmountOut_ReturnsZeroAmountOut() public {
+
+        vm.startPrank(address(this));
+
+        deal(address(tokenA), address(this), 6e18);
+        deal(address(tokenB), address(this), 9000e6);
+
+        IERC20(tokenA).approve(address(calc), 6e18);
+        IERC20(tokenB).approve(address(calc), 9000e6);
+
+        // 6 * 9000 = 54000
+        calc.addLiquidity(6e18, 9000e6);
+
+        vm.stopPrank();
+
+        uint256 amountOut = calc.calculateAmountOut(0e18, address(tokenA));
+
+        // taked zero tokens A and give for user zero tokens B 
+        assertEq(amountOut, 0);
+
+    }
+
+
+
 
 }
