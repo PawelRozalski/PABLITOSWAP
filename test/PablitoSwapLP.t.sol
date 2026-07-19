@@ -545,6 +545,15 @@ contract PablitoSwapLPTest is Test {
     }
 
 
+    function test_CalculateAmountOut_ZeroReservesZeroAmountOut() public {
+
+        uint256 amountOut = calc.calculateAmountOut(1e18, address(tokenA));
+ 
+        assertEq(amountOut, 0);
+
+    }
+
+
 
 
 }

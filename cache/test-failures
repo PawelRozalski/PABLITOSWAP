@@ -1,1 +1,1 @@
-test_CalculateAmountOut_AddedFee
+test_CalculateAmountOut_ZeroReservesZeroAmountOut
