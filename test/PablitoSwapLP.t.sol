@@ -493,7 +493,8 @@ contract PablitoSwapLPTest is Test {
         uint256 amountOut1 = calc.calculateAmountOut(1e18, address(tokenA));
         uint256 amountOut2 = calc.calculateAmountOut(2e18, address(tokenA));
 
-        // 54000 / (6+3) = 6000 and 9000 - 6000 = 3000 output is around 3000 USDC before accounting for fee and price impact
+        // Higher input amount should result in higher output amount
+        // Both calculations include fee and price impact from AMM formula
         assertGt(amountOut2, amountOut1);
 
     }
