@@ -467,7 +467,8 @@ contract PablitoSwapLPTest is Test {
         // how many give token B 
         uint256 expectedA = calc.calculateAmountOut(amountIn, address(tokenB));
 
-        // 54000 / (6000+3000) = 4,5 and 6 - 4,5 = 1,5; output is around 1.5 ETH before accounting for fee and price impact
+        // amountWithoutFee = 3000 * 997 / 1000 = 2991 USDC
+        // amountOut = (2991 * 6) / (9000 + 2991) = 1.4969 ETH
         assertGt(expectedA, 1e18);
         assertLt(expectedA, 2e18);
 
