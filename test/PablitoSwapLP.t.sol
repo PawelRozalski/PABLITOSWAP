@@ -433,7 +433,6 @@ contract PablitoSwapLPTest is Test {
         vm.stopPrank();
 
         uint256 amountIn = 2e18;
-        address tokenIn = address(tokenA);
 
         // how many give token B 
         uint256 expectedB = calc.calculateAmountOut(amountIn, address(tokenA));
