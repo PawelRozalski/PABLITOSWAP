@@ -646,6 +646,18 @@ contract PablitoSwapLPTest is Test {
     }
 
 
+    function test_Swap_RevertAmountZero() public {
+
+        vm.startPrank(address(this));
+    
+        vm.expectRevert("Amount must be > 0");
+
+        calc.swap(address(tokenA), 0, 0);
+    
+        vm.stopPrank();
+
+    }
+
 
 
 }
