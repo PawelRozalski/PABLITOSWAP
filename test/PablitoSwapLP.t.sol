@@ -591,7 +591,6 @@ contract PablitoSwapLPTest is Test {
         // check user token B balance after swap
         uint256 tokenBAfter = tokenB.balanceOf(address(this));
 
-
         uint256 receivedB = tokenBAfter - tokenBBefore;
 
         assertGt(receivedB, 2200e6);
@@ -637,9 +636,8 @@ contract PablitoSwapLPTest is Test {
         // check user token A balance after swap
         uint256 tokenAAfter = tokenA.balanceOf(address(this));
 
-
         uint256 receivedA = tokenAAfter - tokenABefore;
-        console.log(receivedA);
+
         assertGt(receivedA, 1492e15);
         assertLt(receivedA, 1499e15);
 
@@ -683,6 +681,51 @@ contract PablitoSwapLPTest is Test {
         vm.stopPrank();
 
     }
+
+
+    function test_Swap_ReservesChangeCorrectlyAB() public {
+
+        // add new pool
+        vm.startPrank(address(this));
+
+        deal(address(tokenA), address(this), 6000e15);
+        deal(address(tokenB), address(this), 9000e6);
+
+        IERC20(tokenA).approve(address(calc), 6000e15);
+        IERC20(tokenB).approve(address(calc), 9000e6);
+
+        // 6 * 9000 = 54000
+        calc.addLiquidity(6000e15, 9000e6);
+
+        vm.stopPrank();
+
+        // approve token A, user tries to swap
+        vm.startPrank(address(this));
+
+        deal(address(tokenA), address(this), 2000e15);
+
+        IERC20(tokenA).approve(address(calc), 2000e15);
+
+        vm.stopPrank();
+    
+        uint256 reserveA = calc.reserveA();
+        uint256 reserveB = calc.reserveB();
+
+        // amountWithoutFee = 2 * 997 / 1000 = 1.994 ETH
+        // amountOut = (1.994 * 9000) / (6 + 1.994) = 2244.93 USDC
+        calc.swap(address(tokenA), 2000e15, 2240e6);
+
+        vm.stopPrank();
+
+        // 6000e15 + 2000e15 = 8000e15 ETH
+        // 9000e6 - 2245e6 = 6755e6
+        assertEq(calc.reserveA(), 8000e15);
+        assertLt(calc.reserveB(), 6756e6);
+
+    }
+
+
+
 
 
 
