@@ -705,8 +705,6 @@ contract PablitoSwapLPTest is Test {
         deal(address(tokenA), address(this), 2000e15);
 
         IERC20(tokenA).approve(address(calc), 2000e15);
-
-        vm.stopPrank();
     
         uint256 reserveA = calc.reserveA();
         uint256 reserveB = calc.reserveB();
@@ -725,7 +723,44 @@ contract PablitoSwapLPTest is Test {
     }
 
 
+    function test_Swap_ReservesChangeCorrectlyBA() public {
 
+        // add new pool
+        vm.startPrank(address(this));
+
+        deal(address(tokenA), address(this), 6000e15);
+        deal(address(tokenB), address(this), 9000e6);
+
+        IERC20(tokenA).approve(address(calc), 6000e15);
+        IERC20(tokenB).approve(address(calc), 9000e6);
+
+        // 6 * 9000 = 54000
+        calc.addLiquidity(6000e15, 9000e6);
+
+        vm.stopPrank();
+
+        // approve token B, user tries to swap
+        vm.startPrank(address(this));
+
+        deal(address(tokenB), address(this), 3000e6);
+
+        IERC20(tokenB).approve(address(calc), 3000e6);
+    
+        uint256 reserveA = calc.reserveA();
+        uint256 reserveB = calc.reserveB();
+
+        // amountWithoutFee = 3000 * 997 / 1000 = 2991 USDC
+        // amountOut = (2991 * 6) / (9000 + 2991) = 1.4969 ETH
+        calc.swap(address(tokenB), 3000e6, 1496e15);
+
+        vm.stopPrank();
+
+        // 6000e15 - 1496e15 = 4504e15 ETH
+        // 9000e6 + 3000e6 = 12000e6
+        assertLt(calc.reserveA(), 4505e15);
+        assertEq(calc.reserveB(), 12000e6);
+
+    }
 
 
 
