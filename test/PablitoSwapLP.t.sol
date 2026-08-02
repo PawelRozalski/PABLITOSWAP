@@ -763,5 +763,39 @@ contract PablitoSwapLPTest is Test {
     }
 
 
+    // next test for amountOut > 0, but for very small amountIn  
+    function test_Swap_VerySmallAmountIn() public {
+
+        // add new pool
+        vm.startPrank(address(this));
+
+        deal(address(tokenA), address(this), 6000e15);
+        deal(address(tokenB), address(this), 9000e6);
+
+        IERC20(tokenA).approve(address(calc), 6000e15);
+        IERC20(tokenB).approve(address(calc), 9000e6);
+
+        // 6 * 9000 = 54000
+        calc.addLiquidity(6000e15, 9000e6);
+
+        vm.stopPrank();
+
+        // approve token A, user tries to swap
+        vm.startPrank(address(this));
+
+        deal(address(tokenA), address(this), 1);
+
+        IERC20(tokenA).approve(address(calc), 1);
+
+        vm.stopPrank();
+        
+
+        vm.expectRevert("Insufficient output");
+
+        calc.swap(address(tokenA), 1, 0);
+
+    }
+
+
 
 }
