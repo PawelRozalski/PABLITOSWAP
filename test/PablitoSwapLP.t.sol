@@ -797,5 +797,45 @@ contract PablitoSwapLPTest is Test {
     }
 
 
+    function test_Swap_LargeAmountInAB() public {
+
+        // add new pool
+        vm.startPrank(address(this));
+
+        deal(address(tokenA), address(this), 1000e18);
+        deal(address(tokenB), address(this), 1500000e6);
+
+        IERC20(tokenA).approve(address(calc), 1000e18);
+        IERC20(tokenB).approve(address(calc), 1500000e6);
+
+        // 6 * 9000 = 54000
+        calc.addLiquidity(1000e18, 1500000e6);
+
+        vm.stopPrank();
+
+        // approve token A, user tries to swap
+        vm.startPrank(address(this));
+
+        deal(address(tokenA), address(this), 600e18);
+
+        IERC20(tokenA).approve(address(calc), 600e18);
+    
+        uint256 reserveA = calc.reserveA();
+        uint256 reserveB = calc.reserveB();
+
+        // amountWithoutFee = 600 * 997 / 1000 = 598.2 ETH
+        // amountOut = (598,2 * 1500000) / (1000 + 598,2) = 561444.12 USDC
+        calc.swap(address(tokenA), 600e18, 561444e6);
+
+        vm.stopPrank();
+
+        // 1000e18 + 600e18 = 1600e18 ETH
+        // 1500000e6 - 561444e6 = 938556e6
+        assertEq(calc.reserveA(), 1600e18);
+        assertLt(calc.reserveB(), 938557e6);
+        
+    }
+
+
 
 }
