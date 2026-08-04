@@ -877,6 +877,19 @@ contract PablitoSwapLPTest is Test {
     }
 
 
+    function test_Swap_RevertTokenIsInvalid() public {
+
+        vm.startPrank(address(this));
+    
+        vm.expectRevert("Not this token");
+
+        calc.swap(address(0x998877), 10e18, 14500e6);
+    
+        vm.stopPrank();
+
+    }
+
+
 
 
 }
