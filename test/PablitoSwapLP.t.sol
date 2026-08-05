@@ -931,6 +931,46 @@ contract PablitoSwapLPTest is Test {
     }
 
 
+    function test_Swap_RevertSlippageIsTooHigh() public {
+
+        // add new pool
+        vm.startPrank(address(this));
+
+        deal(address(tokenA), address(this), 6000e15);
+        deal(address(tokenB), address(this), 9000e6);
+
+        IERC20(tokenA).approve(address(calc), 6000e15);
+        IERC20(tokenB).approve(address(calc), 9000e6);
+
+        // 6 * 9000 = 54000
+        calc.addLiquidity(6000e15, 9000e6);
+
+        vm.stopPrank();
+
+        // approve token A, user tries to swap
+        vm.startPrank(address(this));
+
+        deal(address(tokenA), address(this), 2000e15);
+
+        IERC20(tokenA).approve(address(calc), 2000e15);
+    
+        uint256 reserveA = calc.reserveA();
+        uint256 reserveB = calc.reserveB();
+
+        // fairr valuation for swap
+        uint256 realAmountOut = calc.calculateAmountOut(2000e15, address(tokenA));
+
+        // unreal valuation for swap = real with +100 increased
+        uint256 fakeMinAmountOut = realAmountOut + 100;
+
+        // expect revert: require((real)amountOut >= (fake)minAmountOut)
+        vm.expectRevert();
+
+        calc.swap(address(tokenA), 2000e15, fakeMinAmountOut);
+
+        vm.stopPrank();
+
+    }
 
 
 
