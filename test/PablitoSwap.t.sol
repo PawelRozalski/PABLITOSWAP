@@ -13,6 +13,7 @@ contract PablitoSwapTest is Test {
 
     // contract like a variable for calculate 
     PablitoSwap public caller;
+    PablitoSwapLP public calc;
 
         uint256 amountA = 1e18;                         // ETH
         uint256 amountB = 1500e6;                       // USDC
@@ -20,16 +21,16 @@ contract PablitoSwapTest is Test {
         MockERC20 public tokenA;        // fake token A
         MockERC20 public tokenB;        // fake token B
 
+
     // SETUP: deploy  
     function setUp() public {
 
         tokenA = new MockERC20();       // create fake token A
         tokenB = new MockERC20();       // create fake token B
 
-        MockERC20(tokenA).mint(address(this), 1e18);        // new token mint for 1 value with e18 for ETH simulation
-        MockERC20(tokenB).mint(address(this), 1500e6);      // new token mint for 1500 value with e6 for USDC simulation
+        calc = new PablitoSwapLP(address(tokenA), address(tokenB));                                     // add data from constructor for tests
 
-        caller = new PablitoSwap(address(tokenA), address(tokenB));                      // add data from constructor for tests
+        caller = new PablitoSwap(address(tokenA), address(tokenB), address(calc));                      // add data from constructor for tests
 
         // taked tokens:
         deal(address(tokenA), address(this), amountA);
