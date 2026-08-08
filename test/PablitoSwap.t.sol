@@ -43,5 +43,28 @@ contract PablitoSwapTest is Test {
     }
 
 
+    function test_Constructor() public {
+
+        assertEq(caller.tokenA(), address(tokenA));
+        assertEq(caller.tokenB(), address(tokenB));
+
+        address actualPablitoSwap;
+        address expectedPablitoSwap;
+
+        actualPablitoSwap = caller.owner();                         // who is owner contract?                   address from this calc.owner variable
+        expectedPablitoSwap = address(this);                        // implementation contract address?         this contract
+
+        assertEq(actualPablitoSwap, expectedPablitoSwap);
+
+        address actualPablitoSwapLP;
+        address expectedPablitoSwapLP;
+
+        actualPablitoSwapLP = address(caller.lpContract());                      // who is owner contract?                   address from this calc.owner variable
+        expectedPablitoSwapLP = address(calc);                                   // implementation contract address?         this contract
+
+        assertEq(actualPablitoSwapLP, expectedPablitoSwapLP);
+
+    }
+
 
 }
