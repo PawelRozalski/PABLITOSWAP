@@ -51,16 +51,16 @@ contract PablitoSwapTest is Test {
         address actualPablitoSwap;
         address expectedPablitoSwap;
 
-        actualPablitoSwap = caller.owner();                         // who is owner contract?                   address from this calc.owner variable
-        expectedPablitoSwap = address(this);                        // implementation contract address?         this contract
+        actualPablitoSwap = caller.owner();
+        expectedPablitoSwap = address(this);
 
         assertEq(actualPablitoSwap, expectedPablitoSwap);
 
         address actualPablitoSwapLP;
         address expectedPablitoSwapLP;
 
-        actualPablitoSwapLP = address(caller.lpContract());                      // who is owner contract?                   address from this calc.owner variable
-        expectedPablitoSwapLP = address(calc);                                   // implementation contract address?         this contract
+        actualPablitoSwapLP = address(caller.lpContract());
+        expectedPablitoSwapLP = address(calc);
 
         assertEq(actualPablitoSwapLP, expectedPablitoSwapLP);
 
