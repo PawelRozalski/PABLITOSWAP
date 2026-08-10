@@ -73,7 +73,6 @@ contract PablitoSwapTest is Test {
 
         vm.stopPrank();
         
-        // Sprawdzamy czy parametry nie uległy uszkodzeniu po drodze
         assertEq(calc.reserveA(), 1e18);
         assertEq(calc.reserveB(), 1500e6);
 
