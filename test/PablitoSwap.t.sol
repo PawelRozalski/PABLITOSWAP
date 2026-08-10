@@ -32,14 +32,6 @@ contract PablitoSwapTest is Test {
 
         caller = new PablitoSwap(address(tokenA), address(tokenB), address(calc));                      // add data from constructor for tests
 
-        // taked tokens:
-        deal(address(tokenA), address(caller), amountA);
-        deal(address(tokenB), address(caller), amountB);
-
-        // approval tokens:
-        IERC20(tokenA).approve(address(caller), amountA);
-        IERC20(tokenB).approve(address(caller), amountB);
-
     }
 
 
