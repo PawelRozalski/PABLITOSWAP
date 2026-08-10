@@ -67,4 +67,21 @@ contract PablitoSwapTest is Test {
     }
 
 
+    function test_Integration_AddLiquidity() public {
+
+        vm.startPrank(address(this));
+
+        caller.addLiquidityToLP(1e18, 1500e6);
+
+        vm.stopPrank();
+        
+        // Sprawdzamy czy parametry nie uległy uszkodzeniu po drodze
+        assertEq(calc.reserveA(), 1e18);
+        assertEq(calc.reserveB(), 1500e6);
+
+    }
+
+
+
+
 }
