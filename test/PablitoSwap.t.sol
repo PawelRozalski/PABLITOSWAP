@@ -105,6 +105,36 @@ contract PablitoSwapTest is Test {
     }
 
 
+    function test_Integration_RemovePieceLiquidity() public {
+
+        vm.startPrank(address(caller));
+
+        deal(address(tokenA), address(caller), amountA);
+        deal(address(tokenB), address(caller), amountB);
+
+        IERC20(tokenA).approve(address(calc), amountA);
+        IERC20(tokenB).approve(address(calc), amountB);
+
+        caller.addLiquidityToLP(10e17, 1500e6);
+
+        // calc (LP) read userLiquidity state for caller (main)
+        uint256 amountLiquidity = calc.userLiquidity(address(caller));
+        // result: 38729833462074
+
+        vm.stopPrank();
+
+        uint256 pieceLiquidity = amountLiquidity / 2;
+
+        caller.removeLiquidityFromLP(pieceLiquidity);
+
+        uint256 pieceAmountA = amountA / 2;
+        uint256 pieceAmountB = amountB / 2;
+
+        assertEq(calc.userLiquidity(address(caller)), pieceLiquidity);
+
+    }
+
+
 
 
 }
