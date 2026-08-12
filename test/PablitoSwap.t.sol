@@ -97,11 +97,8 @@ contract PablitoSwapTest is Test {
 
         vm.stopPrank();
 
-        vm.startPrank(address(caller));
-
         assertEq(amountLiquidity, 38729833462074);
 
-        // Sprawdzamy zwrócone kwoty
         assertEq(amountA, 1e18);
         assertEq(amountB, 1500e6);
 
