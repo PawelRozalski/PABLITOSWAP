@@ -127,9 +127,6 @@ contract PablitoSwapTest is Test {
 
         caller.removeLiquidityFromLP(pieceLiquidity);
 
-        uint256 pieceAmountA = amountA / 2;
-        uint256 pieceAmountB = amountB / 2;
-
         assertEq(calc.userLiquidity(address(caller)), pieceLiquidity);
 
     }
