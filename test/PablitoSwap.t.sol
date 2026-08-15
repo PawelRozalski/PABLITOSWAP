@@ -178,7 +178,40 @@ contract PablitoSwapTest is Test {
     }
 
 
+        function test_Integration_SwapAB() public {
+
+        vm.startPrank(address(caller));
+
+        deal(address(tokenA), address(caller), 6e18);
+        deal(address(tokenB), address(caller), 9000000000);
+
+        IERC20(tokenA).approve(address(calc), 6e18);
+        IERC20(tokenB).approve(address(calc), 9000000000);
+
+        caller.addLiquidityToLP(6e18, 9000000000);
+
+        vm.stopPrank();
+
+        vm.startPrank(address(caller));
+
+        deal(address(tokenA), address(caller), 2e18);
+
+        IERC20(tokenA).approve(address(calc), 2e18);
     
+        caller.swapInLP(address(tokenA), 2e18, 2244933700);
+
+        uint256 reserveA = calc.reserveA();
+        uint256 reserveB = calc.reserveB();
+
+        // amountWithoutFee = 2 * 997 / 1000 = 1.994 ETH
+        // amountOut = (1.994 * 9000) / (6 + 1.994) = 2244.933700 USDC
+        assertEq(reserveA, 8e18);
+        assertEq(reserveB, 6755066300);
+
+    }    
+
+
+
 
 
 }
