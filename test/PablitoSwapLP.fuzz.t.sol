@@ -9,3 +9,9 @@ import "../src/PablitoSwapLP.sol";
 import "../src/MockERC20.sol";
 
 
+contract PablitoSwapLPTestFuzz is Test {
+
+
+
+
+}
