@@ -40,18 +40,23 @@ contract PablitoSwapLPTestFuzz is Test {
     }
 
 
-    function test_Fuzz_AddLiquidity (uint256 amountA, uint256 amountB) public {
+    function test_Fuzz_AddLiquidity(uint256 amountA, uint256 amountB) public {
 
-        vm.assume(amountA > 1000 && amountA < 1000000e18);
-        vm.assume(amountB > 1000 && amountB < 1000000e18);
+        vm.assume(amountA > 1000e6 && amountA < 1000000e18);
+        vm.assume(amountB > 1000e6 && amountB < 1000000e18);
+
+        deal(address(tokenA), address(this), amountA);
+        deal(address(tokenB), address(this), amountB);
+
+        IERC20(tokenA).approve(address(calc), amountA);
+        IERC20(tokenB).approve(address(calc), amountB);
 
         uint256 generatedLP = calc.addLiquidity(amountA, amountB);
 
         assertGt(generatedLP, 0);
-
         assertEq(calc.reserveA(), amountA);
         assertEq(calc.reserveB(), amountB);
-
+        
     }
 
 
