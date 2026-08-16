@@ -29,14 +29,6 @@ contract PablitoSwapLPTestFuzz is Test {
 
         calc = new PablitoSwapLP(address(tokenA), address(tokenB));                      // add data from constructor for tests
 
-        // taked tokens:
-        deal(address(tokenA), address(this), amountA);
-        deal(address(tokenB), address(this), amountB);
-
-        // approval tokens:
-        IERC20(tokenA).approve(address(calc), amountA);
-        IERC20(tokenB).approve(address(calc), amountB);
-
     }
 
 
@@ -56,7 +48,7 @@ contract PablitoSwapLPTestFuzz is Test {
         assertGt(generatedLP, 0);
         assertEq(calc.reserveA(), amountA);
         assertEq(calc.reserveB(), amountB);
-        
+
     }
 
 
