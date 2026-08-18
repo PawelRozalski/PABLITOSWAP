@@ -45,7 +45,6 @@ contract PablitoSwapLPTestFuzz is Test {
 
         calc.addLiquidity(amountA, amountB);
 
-        //assertGt(generatedLP, 0);
         assertEq(calc.reserveA(), amountA);
         assertEq(calc.reserveB(), amountB);
 
