@@ -52,4 +52,44 @@ contract PablitoSwapLPTestFuzz is Test {
     }
 
 
+    function test_Fuzz_AddLiquidity_NextLP(uint256 amountA, uint256 amountB, uint256 amountAA) public {
+
+        // drawing in the range
+        vm.assume(amountA > 1e18 && amountA < 1000000e18);
+        vm.assume(amountB > 1e6 && amountB < 1000000e6);
+
+        deal(address(tokenA), address(this), amountA);
+        deal(address(tokenB), address(this), amountB);
+
+        IERC20(tokenA).approve(address(calc), amountA);
+        IERC20(tokenB).approve(address(calc), amountB);
+
+        calc.addLiquidity(amountA, amountB);
+
+        uint256 reserveA = calc.reserveA();
+        uint256 reserveB = calc.reserveB();
+
+        console.log("reserveA:", reserveA);
+        console.log("reserveB:", reserveB);
+
+        // drawing in the range
+        vm.assume(amountAA > 1e18 && amountAA < 1000000e18);
+        deal(address(tokenA), address(this), amountAA);
+        IERC20(tokenA).approve(address(calc), amountAA);
+        
+        uint256 amountBB = (amountAA * reserveB + reserveA - 1) / reserveA;
+        deal(address(tokenB), address(this), amountBB);
+        IERC20(tokenB).approve(address(calc), amountBB);
+
+        console.log("amountAA:", amountAA);
+        console.log("amountBB:", amountBB);
+
+        calc.addLiquidity(amountAA, amountBB);
+
+        assertEq(calc.reserveA(), reserveA + amountAA);
+        assertEq(calc.reserveB(), reserveB + amountBB);
+
+    }
+
+
 }
