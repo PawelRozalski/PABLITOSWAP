@@ -33,49 +33,51 @@ contract PablitoSwapLP {
     mapping(address => uint256) public userLiquidity;
 
 
-    function addLiquidity(uint256 amountA, uint256 amountB) external {
+function addLiquidity(uint256 amountA, uint256 amountB) external {
 
         uint256 liquidity;
 
-        // Check amount tokens A WETH and B USDC
-        require(amountA > 0, "Amount must be > 0"); 
-        require(amountB > 0, "Amount must be > 0"); 
+        require(amountA > 0, "Amount must be > 0");
+        require(amountB > 0, "Amount must be > 0");
 
-        // first amounts in pool:
+        // First liquidity provider
         if (totalLiquidity == 0) {
 
+            IERC20(tokenA).safeTransferFrom(msg.sender, address(this), amountA);
+            IERC20(tokenB).safeTransferFrom(msg.sender, address(this), amountB);
+
             liquidity = Math.sqrt(amountA * amountB);
-        // every amounts next in pool:
+
+        // Next liquidity providers
         } else {
-            // perfect ratio
-            require(
-                amountA * reserveB == amountB * reserveA,
-                "Wrong token ratio"
-            );
+
+            // calculate how much tokenB is actually required
+            // to maintain the pool ratio
+            uint256 requiredB = (amountA * reserveB + reserveA - 1) / reserveA;
+
+            require(amountB >= requiredB, "Insufficient tokenB");
+
+            IERC20(tokenA).safeTransferFrom(msg.sender, address(this), amountA);
+            IERC20(tokenB).safeTransferFrom(msg.sender, address(this), requiredB);
 
             uint256 liquidityA = (amountA * totalLiquidity) / reserveA;
-            uint256 liquidityB = (amountB * totalLiquidity) / reserveB;
+            uint256 liquidityB = (requiredB * totalLiquidity) / reserveB;
 
-            // limit for user deposit  
             liquidity = Math.min(liquidityA, liquidityB);
+
+            // for the second and subsequent LPs,
+            // only amountA and requiredB enter the pool.
+            amountB = requiredB;
         }
 
-        // limit for amount minimum  
         require(liquidity > 0, "Insufficient liquidity");
 
-
-        // update in storage state for user: +LP for user
         userLiquidity[msg.sender] += liquidity;
-        // total LP in pool: + for pool
         totalLiquidity += liquidity;
 
-
-        // Update variables storage: how many tokens add?
         reserveA += amountA;
         reserveB += amountB;
 
-
-        // emit event for tracking liquidity add
         emit AddLiquidity(msg.sender, amountA, amountB, liquidity);
 
     }
