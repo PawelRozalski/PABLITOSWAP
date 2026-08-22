@@ -33,7 +33,6 @@ contract PablitoSwapLP {
     mapping(address => uint256) public userLiquidity;
 
 
-    // AMM: add reserve to LP (+)
     function addLiquidity(uint256 amountA, uint256 amountB) external {
 
         uint256 liquidity;
@@ -42,12 +41,9 @@ contract PablitoSwapLP {
         require(amountA > 0, "Amount must be > 0"); 
         require(amountB > 0, "Amount must be > 0"); 
 
-        // Token transfers from user to my contract address
-        IERC20(tokenA).safeTransferFrom(msg.sender, address(this), amountA);
-        IERC20(tokenB).safeTransferFrom(msg.sender, address(this), amountB);
-
         // first amounts in pool:
         if (totalLiquidity == 0) {
+
             liquidity = Math.sqrt(amountA * amountB);
         // every amounts next in pool:
         } else {
