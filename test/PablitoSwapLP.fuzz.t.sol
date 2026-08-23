@@ -34,6 +34,9 @@ contract PablitoSwapLPTestFuzz is Test {
 
     function test_Fuzz_AddLiquidity_FirstLP(uint256 amountA, uint256 amountB) public {
 
+        amountA = bound(amountA, 1e18, 1000000e18);
+        amountB = bound(amountB, 1e6, 1000000e6);
+
         // drawing in the range
         vm.assume(amountA > 1e18 && amountA < 1000000e18);
         vm.assume(amountB > 1e6 && amountB < 1000000e6);
