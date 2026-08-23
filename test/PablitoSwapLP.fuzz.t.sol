@@ -37,10 +37,6 @@ contract PablitoSwapLPTestFuzz is Test {
         amountA = bound(amountA, 1e18, 1000000e18);
         amountB = bound(amountB, 1e6, 1000000e6);
 
-        // drawing in the range
-        vm.assume(amountA > 1e18 && amountA < 1000000e18);
-        vm.assume(amountB > 1e6 && amountB < 1000000e6);
-
         deal(address(tokenA), address(this), amountA);
         deal(address(tokenB), address(this), amountB);
 
@@ -59,10 +55,6 @@ contract PablitoSwapLPTestFuzz is Test {
 
         amountA = bound(amountA, 1e18, 1000000e18);
         amountB = bound(amountB, 1e6, 1000000e6);
-
-        // drawing in the range
-        vm.assume(amountA > 1e18 && amountA < 1000000e18);
-        vm.assume(amountB > 1e6 && amountB < 1000000e6);
 
         deal(address(tokenA), address(this), amountA);
         deal(address(tokenB), address(this), amountB);
