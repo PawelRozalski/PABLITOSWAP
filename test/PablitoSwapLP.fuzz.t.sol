@@ -114,5 +114,40 @@ contract PablitoSwapLPTestFuzz is Test {
     }
 
 
+    function test_Fuzz_removeLiquidity_Part(uint256 amountA, uint256 amountB, uint256 liquidity) public {
+
+        amountA = bound(amountA, 1e18, 1000000e18);
+        amountB = bound(amountB, 1e6, 1000000e6);
+
+        deal(address(tokenA), address(this), amountA);
+        deal(address(tokenB), address(this), amountB);
+
+        IERC20(tokenA).approve(address(calc), amountA);
+        IERC20(tokenB).approve(address(calc), amountB);
+
+        calc.addLiquidity(amountA, amountB);
+
+        vm.startPrank(address(this));
+
+        uint256 reserveABefore = calc.reserveA();
+        uint256 reserveBBefore = calc.reserveB();
+        uint256 userLiquidityBefore = calc.userLiquidity(address(this));
+        uint256 totalLiquidityBefore = calc.totalLiquidity();
+
+        vm.assume(userLiquidityBefore >= 2);
+
+        liquidity = bound(liquidity, 1, userLiquidityBefore - 1);
+
+        calc.removeLiquidity(liquidity);
+
+        vm.stopPrank();
+
+        assertLt(calc.userLiquidity(address(this)), userLiquidityBefore);
+        assertLt(calc.totalLiquidity(), totalLiquidityBefore);
+    
+        assertLt(calc.reserveA(), reserveABefore);
+        assertLe(calc.reserveB(), reserveBBefore);
+
+    }
 
 }
