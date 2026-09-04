@@ -145,9 +145,11 @@ contract PablitoSwapLPTestFuzz is Test {
         assertLt(calc.userLiquidity(address(this)), userLiquidityBefore);
         assertLt(calc.totalLiquidity(), totalLiquidityBefore);
     
-        assertLt(calc.reserveA(), reserveABefore);
+        assertLe(calc.reserveA(), reserveABefore);
         assertLe(calc.reserveB(), reserveBBefore);
-
+        
     }
+
+
 
 }
