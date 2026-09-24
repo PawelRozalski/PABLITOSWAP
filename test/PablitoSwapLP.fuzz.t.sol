@@ -151,5 +151,55 @@ contract PablitoSwapLPTestFuzz is Test {
     }
 
 
+    function test_Fuzz_SwapAB(address tokenIn, uint256 amountIn, uint256 minAmountOut, uint256 amountA, uint256 amountB) public {
+
+        vm.startPrank(address(this));
+
+        amountA = bound(amountA, 1e18, 1000000e18);
+        amountB = bound(amountB, 1e6, 1000000e6);
+
+        deal(address(tokenA), address(this), amountA);
+        deal(address(tokenB), address(this), amountB);
+
+        IERC20(tokenA).approve(address(calc), amountA);
+        IERC20(tokenB).approve(address(calc), amountB);
+
+        calc.addLiquidity(amountA, amountB);
+
+        uint256 reserveABefore = calc.reserveA();
+        uint256 reserveBBefore = calc.reserveB();
+
+        vm.stopPrank();
+
+        vm.startPrank(address(this));
+
+        tokenIn = address(tokenA);
+
+        amountIn = bound(amountIn, 1e18, 3e18);
+        deal(address(tokenIn), address(this), amountIn);
+        IERC20(tokenIn).approve(address(calc), amountIn);
+
+        uint256 userBalanceABefore = tokenA.balanceOf(address(this));
+        uint256 userBalanceBBefore = tokenB.balanceOf(address(this));
+
+        console.log("amountIn", amountIn);
+        console.log("reserveA", calc.reserveA());
+        console.log("reserveB", calc.reserveB());
+        console.log("amountOut", calc.calculateAmountOut(amountIn, tokenIn));
+
+
+        calc.swap(tokenIn, amountIn, calc.calculateAmountOut(amountIn, tokenIn));
+
+        vm.stopPrank();
+
+        assertLt(tokenA.balanceOf(address(this)), userBalanceABefore);  
+        assertGt(tokenB.balanceOf(address(this)), userBalanceBBefore);  
+    
+        assertGt(calc.reserveA(), reserveABefore);          
+        assertLt(calc.reserveB(), reserveBBefore);          
+
+    }
+
+
 
 }
