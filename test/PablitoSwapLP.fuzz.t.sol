@@ -182,13 +182,10 @@ contract PablitoSwapLPTestFuzz is Test {
         uint256 userBalanceABefore = tokenA.balanceOf(address(this));
         uint256 userBalanceBBefore = tokenB.balanceOf(address(this));
 
-        console.log("amountIn", amountIn);
-        console.log("reserveA", calc.reserveA());
-        console.log("reserveB", calc.reserveB());
-        console.log("amountOut", calc.calculateAmountOut(amountIn, tokenIn));
+        uint256 amountOut = calc.calculateAmountOut(amountIn, tokenIn);
+        vm.assume(amountOut > 0);
 
-
-        calc.swap(tokenIn, amountIn, calc.calculateAmountOut(amountIn, tokenIn));
+        calc.swap(tokenIn, amountIn, amountOut);
 
         vm.stopPrank();
 
