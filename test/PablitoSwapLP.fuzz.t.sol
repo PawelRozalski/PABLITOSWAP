@@ -151,7 +151,7 @@ contract PablitoSwapLPTestFuzz is Test {
     }
 
 
-    function test_Fuzz_SwapAB(address tokenIn, uint256 amountIn, uint256 minAmountOut, uint256 amountA, uint256 amountB) public {
+    function test_Fuzz_GoodSwapAB(address tokenIn, uint256 amountIn, uint256 minAmountOut, uint256 amountA, uint256 amountB) public {
 
         vm.startPrank(address(this));
 
