@@ -385,5 +385,43 @@ contract PablitoSwapLPTestFuzz is Test {
     }
 
 
+    function test_Fuzz_CalculateAmountOutBA(address tokenIn, uint256 amountIn, uint256 minAmountOut, uint256 amountA, uint256 amountB) public {
+
+        vm.startPrank(address(this));
+
+        amountA = bound(amountA, 1e18, 1000000e18);
+        amountB = bound(amountB, 1e6, 1000000e6);
+
+        deal(address(tokenA), address(this), amountA);
+        deal(address(tokenB), address(this), amountB);
+
+        IERC20(tokenA).approve(address(calc), amountA);
+        IERC20(tokenB).approve(address(calc), amountB);
+
+        calc.addLiquidity(amountA, amountB);
+
+        uint256 reserveABefore = calc.reserveA();
+        uint256 reserveBBefore = calc.reserveB();
+
+        vm.stopPrank();
+
+        vm.startPrank(address(this));
+
+        tokenIn = address(tokenB);
+
+        amountIn = bound(amountIn, 10e6, 100e6);
+        deal(address(tokenIn), address(this), amountIn);
+        IERC20(tokenIn).approve(address(calc), amountIn);
+
+        uint256 amountWithoutFee = amountIn * (1000 - 3) / 1000;
+        uint256 amountOut = (amountWithoutFee * reserveABefore) / (reserveBBefore + amountWithoutFee);
+
+        uint256 expectedA = calc.calculateAmountOut(amountIn, tokenIn);
+
+        vm.stopPrank();
+
+        assertEq(amountOut, expectedA);
+        
+    }
 
 }
