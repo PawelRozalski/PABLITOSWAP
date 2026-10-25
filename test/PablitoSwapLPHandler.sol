@@ -9,3 +9,8 @@ import "../src/PablitoSwapLP.sol";
 import "../src/MockERC20.sol";
 
 
+contract PablitoSwapLPHandler is Test {
+
+    
+
+}
