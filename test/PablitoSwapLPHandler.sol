@@ -11,6 +11,23 @@ import "../src/MockERC20.sol";
 
 contract PablitoSwapLPHandler is Test {
 
+    PablitoSwapLP public calc;
     
+    MockERC20 public tokenA;
+    MockERC20 public tokenB;
+
+    constructor (PablitoSwapLP _calc, MockERC20 _tokenA, MockERC20 _tokenB) {
+
+        calc = _calc;
+
+        tokenA = _tokenA;
+        tokenB = _tokenB;
+
+    }
+
+
+    
+
+
 
 }
