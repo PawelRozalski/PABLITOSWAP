@@ -32,7 +32,25 @@ contract PablitoSwapLPHandler is Test {
     }
 
 
+    function addLiquidity_FirstLP(uint256 amountA, uint256 amountB) public {
 
+        amountA = bound(amountA, 1e18, 1000000e18);
+        amountB = bound(amountB, 1e6, 1000000e6);
+
+        tokenA.mint(Degen1, amountA);
+        tokenB.mint(Degen1, amountB);
+
+        vm.startPrank(address(Degen1));
+
+        // who can download tokens
+        tokenA.approve(address(calc), amountA);
+        tokenB.approve(address(calc), amountB);
+
+        calc.addLiquidity(amountA, amountB);
+
+        vm.stopPrank();
+
+    }
 
 
 
