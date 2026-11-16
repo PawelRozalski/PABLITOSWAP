@@ -53,5 +53,79 @@ contract PablitoSwapLPHandler is Test {
     }
 
 
+    function swap (address tokenIn, uint256 amountIn, uint256 amountA, uint256 amountB, uint256 actorSeed) public { address[4] memory actors = [Degen1, Degen2, Degen3, Degen4];
+
+        address actor = actors[bound(actorSeed, 0, 3)];
+
+        MockERC20 tokenOut;
+        uint256 reserveA;
+        uint256 reserveB;
+        uint256 reserveIn;
+        uint256 reserveOut;
+
+
+
+        if (tokenIn != address(tokenA) && tokenIn != address(tokenB)) return;
+
+
+
+        amountA = bound(amountA, 1e18, 1000000e18);
+        amountB = bound(amountB, 1e6, 1000000e6);
+
+        tokenA.mint(actor, amountA);
+        tokenB.mint(actor, amountB);
+
+
+        vm.startPrank(actor);
+
+        tokenA.approve(address(calc), amountA);
+        tokenB.approve(address(calc), amountB);
+
+        calc.addLiquidity(amountA, amountB);
+
+        reserveA = calc.reserveA();
+        reserveB = calc.reserveB();
+
+        vm.stopPrank();
+
+
+        // direction swap
+        if (tokenIn == address(tokenA)) {
+            tokenOut = tokenB;
+            amountIn = bound(amountIn, 1e18, 1000000e18);
+            reserveIn = reserveA;
+            reserveOut = reserveB;
+        } else {
+            tokenOut = tokenA;
+            amountIn = bound(amountIn, 1e6, 1000000e6);
+            reserveIn = reserveB;
+            reserveOut = reserveA;
+        }
+
+        if (tokenIn == address(tokenA)) {
+            tokenA.mint(actor, amountIn);
+        } else {
+            tokenB.mint(actor, amountIn);
+        }
+
+        uint256 amountWithoutFee = amountIn * (1000 - 3) / 1000;
+        uint256 amountOut = (amountWithoutFee * reserveOut) / (reserveIn + amountWithoutFee);
+
+
+        if (amountOut == 0) return;
+
+
+        vm.startPrank(actor);
+
+        IERC20(tokenIn).approve(address(calc), amountIn);
+
+        calc.swap(tokenIn, amountIn, amountOut);
+
+        vm.stopPrank();
+
+    }
+
+
+
 
 }
