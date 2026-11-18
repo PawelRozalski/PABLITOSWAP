@@ -32,7 +32,7 @@ contract PablitoSwapLPHandler is Test {
     }
 
 
-    function addLiquidity_Degen1(uint256 amountA, uint256 amountB) public {
+    function addLiquidity (uint256 amountA, uint256 amountB) public {
 
         amountA = bound(amountA, 1e18, 1000000e18);
         amountB = bound(amountB, 1e6, 1000000e6);
@@ -124,6 +124,7 @@ contract PablitoSwapLPHandler is Test {
         vm.stopPrank();
 
     }
+
 
 
 
