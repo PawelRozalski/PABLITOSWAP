@@ -34,6 +34,9 @@ contract PablitoSwapLPHandler is Test {
 
     function addLiquidity (uint256 amountA, uint256 amountB) public { address[4] memory actors = [Degen1, Degen2, Degen3, Degen4];
 
+        address actor = actors[bound(actorSeed, 0, 3)];
+        
+
         amountA = bound(amountA, 1e18, 1000000e18);
         amountB = bound(amountB, 1e6, 1000000e6);
 
