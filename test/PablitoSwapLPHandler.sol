@@ -126,7 +126,23 @@ contract PablitoSwapLPHandler is Test {
     }
 
 
+    function removeLiquidity (uint256 liquidity, uint256 actorSeed) public { address[4] memory actors = [Degen1, Degen2, Degen3, Degen4];
 
+        address actor = actors[bound(actorSeed, 0, 3)];
+
+        uint256 userLP = calc.userLiquidity(actor);
+
+        if (userLP == 0) return;
+
+        liquidity = bound(liquidity, 1, userLP);
+
+        vm.startPrank(actor);
+
+        calc.removeLiquidity(liquidity);
+
+        vm.stopPrank();
+
+    }
 
 
 }
