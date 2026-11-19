@@ -35,17 +35,17 @@ contract PablitoSwapLPHandler is Test {
     function addLiquidity (uint256 amountA, uint256 amountB) public { address[4] memory actors = [Degen1, Degen2, Degen3, Degen4];
 
         address actor = actors[bound(actorSeed, 0, 3)];
-        
+
 
         amountA = bound(amountA, 1e18, 1000000e18);
         amountB = bound(amountB, 1e6, 1000000e6);
 
-        tokenA.mint(Degen1, amountA);
-        tokenB.mint(Degen1, amountB);
+        tokenA.mint(actor, amountA);
+        tokenB.mint(actor, amountB);
 
-        vm.startPrank(address(Degen1));
+        vm.startPrank(actor);
 
-        // who can download tokens
+        // approve the pool > to spend the actor tokens
         tokenA.approve(address(calc), amountA);
         tokenB.approve(address(calc), amountB);
 
