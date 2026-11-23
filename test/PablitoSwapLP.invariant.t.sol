@@ -24,8 +24,11 @@ contract PablitoSwapLPInvariantTest is StdInvariant, Test {
 
         calc = new PablitoSwapLP(address(tokenA), address(tokenB));                      // add data from constructor for tests
 
-    }
+        handler = new PablitoSwapLPHandler(calc, tokenA, tokenB);
 
+        targetContract(address(handler));
+
+    }
 
 
 
