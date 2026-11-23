@@ -16,4 +16,18 @@ import "./PablitoSwapLPHandler.sol";
 // StdInvariant > its mechanics indicates which contracts go to invariant testing
 contract PablitoSwapLPInvariantTest is StdInvariant, Test {
 
+
+    function setUp() public {
+
+        tokenA = new MockERC20();       // create fake token A
+        tokenB = new MockERC20();       // create fake token B
+
+        calc = new PablitoSwapLP(address(tokenA), address(tokenB));                      // add data from constructor for tests
+
+    }
+
+
+
+
+
 }
