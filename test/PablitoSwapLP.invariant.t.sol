@@ -13,6 +13,7 @@ import "./PablitoSwapLPHandler.sol";
 
 
 
+// StdInvariant > its mechanics indicates which contracts go to invariant testing
 contract PablitoSwapLPInvariantTest is StdInvariant, Test {
 
 }
