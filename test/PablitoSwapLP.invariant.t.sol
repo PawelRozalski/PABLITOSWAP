@@ -11,3 +11,7 @@ import "../src/MockERC20.sol";
 import "./PablitoSwapLPHandler.sol";
 
 
+
+contract PablitoSwapLPInvariantTest is StdInvariant, Test {
+
+}
