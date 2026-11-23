@@ -26,6 +26,7 @@ contract PablitoSwapLPInvariantTest is StdInvariant, Test {
 
         handler = new PablitoSwapLPHandler(calc, tokenA, tokenB);
 
+        // this contract is target for random call
         targetContract(address(handler));
 
     }
