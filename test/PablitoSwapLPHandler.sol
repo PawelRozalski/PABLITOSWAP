@@ -79,18 +79,6 @@ contract PablitoSwapLPHandler is Test {
         tokenB.mint(actor, amountB);
 
 
-        vm.startPrank(actor);
-
-        tokenA.approve(address(calc), amountA);
-        tokenB.approve(address(calc), amountB);
-
-        calc.addLiquidity(amountA, amountB);
-
-        reserveA = calc.reserveA();
-        reserveB = calc.reserveB();
-
-        vm.stopPrank();
-
 
         // direction swap
         if (tokenIn == address(tokenA)) {
