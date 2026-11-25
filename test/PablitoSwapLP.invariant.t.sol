@@ -36,6 +36,13 @@ contract PablitoSwapLPInvariantTest is StdInvariant, Test {
 
     }
 
+    // does the PablitoSwapLP contract hold at least the amount of tokens recorded in its reserves?
+    function invariant_tokenBalancesReserves() public view {
+
+        assertGe(tokenA.balanceOf(address(calc)), calc.reserveA());
+        assertGe(tokenB.balanceOf(address(calc)), calc.reserveB());
+
+    }
 
 
 
