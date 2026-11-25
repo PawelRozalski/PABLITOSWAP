@@ -60,7 +60,7 @@ contract PablitoSwapLPHandler is Test {
 
         address actor = actors[bound(actorSeed, 0, 3)];
 
-        //MockERC20 tokenOut;
+        MockERC20 tokenOut;
         uint256 reserveA;
         uint256 reserveB;
         uint256 reserveIn;

@@ -16,6 +16,9 @@ import "./PablitoSwapLPHandler.sol";
 // StdInvariant > its mechanics indicates which contracts go to invariant testing
 contract PablitoSwapLPInvariantTest is StdInvariant, Test {
 
+    MockERC20 public tokenA;
+    MockERC20 public tokenB;
+    PablitoSwapLP public calc;
     PablitoSwapLPHandler public handler;
 
 
@@ -32,6 +35,7 @@ contract PablitoSwapLPInvariantTest is StdInvariant, Test {
         targetContract(address(handler));
 
     }
+
 
 
 
