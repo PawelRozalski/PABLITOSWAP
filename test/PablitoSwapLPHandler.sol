@@ -36,6 +36,9 @@ contract PablitoSwapLPHandler is Test {
 
         address actor = actors[bound(actorSeed, 0, 3)];
 
+        // save
+        uint256 reserveA = calc.reserveA();
+        uint256 reserveB = calc.reserveB();
 
         amountA = bound(amountA, 1e18, 1000000e18);
 
