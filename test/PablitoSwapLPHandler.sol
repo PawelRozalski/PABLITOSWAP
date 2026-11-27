@@ -39,6 +39,12 @@ contract PablitoSwapLPHandler is Test {
 
         amountA = bound(amountA, 1e18, 1000000e18);
 
+        if (calc.totalLiquidity() > 0) {
+            amountB = (amountA * reserveB + reserveA - 1) / reserveA;
+        } else {
+            amountB = bound(amountB, 1e6, 1000000e6);
+        
+        }
 
         tokenA.mint(actor, amountA);
         tokenB.mint(actor, amountB);
