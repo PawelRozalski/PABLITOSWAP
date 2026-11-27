@@ -38,7 +38,7 @@ contract PablitoSwapLPHandler is Test {
 
 
         amountA = bound(amountA, 1e18, 1000000e18);
-        amountB = bound(amountB, 1e6, 1000000e6);
+
 
         tokenA.mint(actor, amountA);
         tokenB.mint(actor, amountB);
